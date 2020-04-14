@@ -1,0 +1,51 @@
+
+<section>
+        <a href="feed/cidadao/{{cidadao.dataValues.id}}"> Voltar a página inicial</a>
+        <article id="cpCadastro">
+    <h1>Atualização de dados - Cidadão</h1><hr>
+    {{#each erros_cid}}
+                <div class="alerta_erro">{{texto}}</div>
+            {{else}}
+
+            {{/each}}
+            {{msg}}
+                <div id="cadastropt1">
+                    <form action="/att_cid/{{cidadao.dataValues.id}}" method="POST">
+                        Nome Completo:<input type="text" name="nome" value="{{cidadao.dataValues.nome}}"  pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" >
+                        Data de nascimento:{{cidadao.dataValues.datanasc}} <input type="date" name="data_nasc">
+                        E-mail: <input type="email" name="email" value="{{cidadao.dataValues.email}}" > 
+                        <hr>
+                        <fieldset>
+                        <legend><strong>Documento pessoal</strong></legend>
+                        <select name="tipodoc">
+                            <option value="{{cidadao.dataValues.tipo_doc}}">{{cidadao.dataValues.tipo_doc}}</option>
+                            <option value="RG">RG</option>
+                            <option value="CPF">CPF</option>
+                        </select>
+                        <input type="text" name="numdoc" value="{{cidadao.dataValues.numero_doc}}">
+                    </fieldset>
+                   <fieldset>
+                        <legend><strong>Grau de escolaridade</strong></legend>
+                        <select name="escolaridade">
+                            <option value="{{cidadao.dataValues.escolaridade}}">{{cidadao.dataValues.escolaridade}}</option>
+                            <option value="Fundamental - Incompleto">Fundamental - Incompleto</option>
+                            <option value="Fundamental - Completo">Fundamental - Completo</option>
+                            <option value="Médio - Incompleto">Médio - Incompleto</option>
+                            <option value="Médio - Completo">Médio - Completo</option>
+                            <option value="Superior - Incompleto">Superior - Incompleto</option>
+                            <option value="Superior - Completo">Superior - Completo</option>
+                            <option value="Pós-graduação (Lato senso) - Incompleto">Pós-graduação (Lato senso) - Incompleto</option>
+                            <option value="Pós-graduação (Lato senso) - Completo">Pós-graduação (Lato senso) - Completo</option>
+                            <option value="Pós-graduação (Stricto sensu, nível mestrado) - Incompleto">Pós-graduação (Stricto sensu, nível mestrado) - Incompleto</option>
+                            <option value="Pós-graduação (Stricto sensu, nível mestrado) - Completo">Pós-graduação (Stricto sensu, nível mestrado) - Completo</option>
+                            <option value="Pós-graduação (Stricto sensu, nível doutor) - Incompleto">Pós-graduação (Stricto sensu, nível doutor) - Incompleto</option>
+                            <option value="Pós-graduação (Stricto sensu, nível doutor) - Completo">Pós-graduação (Stricto sensu, nível doutor) - Completo</option>
+                        </select>
+                    </fieldset> 
+                     Tópicos de interesse: <input type="text" name="cid_topicos" value="{{cidadao.dataValues.temas_interesse}}" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$">
+                        
+                        <button  type="submit" >Verificar</button><input type="password" name="senha_verificacao" placeholder="Senha de verificação">
+                    </form>
+                </div>
+            </article>
+        </section>

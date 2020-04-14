@@ -1,0 +1,49 @@
+<header>
+       <img src="./imagens/logo.png" alt="">
+                <div class="clear"></div>
+    </header>
+<section>
+        <article id="cpCadastro">
+        <h1>Formulário de Cadastro - Cidadão em geral</h1><hr>
+        {{#each erros_cid}}
+                <div class="alerta_erro">{{texto}}</div>
+            {{else}}
+
+            {{/each}}
+            <div id="cadastropt1">
+                <form action="/add_cid" method="POST" name="cad1_cidadao" >
+                    <fieldset>
+                        <legend><strong>Documento pessoal</strong></legend>
+                        <select name="tipodoc" id="">
+                            <option value="RG">RG</option>
+                            <option value="CPF">CPF</option>
+                        </select>
+                        <input type="text" name="numdoc">
+                    </fieldset>
+                   <fieldset>
+                        <legend><strong>Grau de escolaridade</strong></legend>
+                        <select name="escolaridade" id="">
+                            <option value="Fundamental - Incompleto">Fundamental - Incompleto</option>
+                            <option value="Fundamental - Completo">Fundamental - Completo</option>
+                            <option value="Médio - Incompleto">Médio - Incompleto</option>
+                            <option value="Médio - Completo">Médio - Completo</option>
+                            <option value="Superior - Incompleto">Superior - Incompleto</option>
+                            <option value="Superior - Completo">Superior - Completo</option>
+                            <option value="Pós-graduação (Lato senso) - Incompleto">Pós-graduação (Lato senso) - Incompleto</option>
+                            <option value="Pós-graduação (Lato senso) - Completo">Pós-graduação (Lato senso) - Completo</option>
+                            <option value="Pós-graduação (Stricto sensu, nível mestrado) - Incompleto">Pós-graduação (Stricto sensu, nível mestrado) - Incompleto</option>
+                            <option value="Pós-graduação (Stricto sensu, nível mestrado) - Completo">Pós-graduação (Stricto sensu, nível mestrado) - Completo</option>
+                            <option value="Pós-graduação (Stricto sensu, nível doutor) - Incompleto">Pós-graduação (Stricto sensu, nível doutor) - Incompleto</option>
+                            <option value="Pós-graduação (Stricto sensu, nível doutor) - Completo">Pós-graduação (Stricto sensu, nível doutor) - Completo</option>
+                        </select>
+                    </fieldset> 
+                     Tópicos de interesse: <input type="text" name="cid_topicos" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$">
+                   
+                    <button type="submit" >Verificar</button>
+                </form>
+            </div>
+        </article>
+
+        </article>
+
+    </section>

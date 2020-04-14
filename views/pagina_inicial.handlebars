@@ -1,0 +1,28 @@
+<header>
+
+    </header>
+<section>
+       {{#if eh_pesquisador}}
+       <a href="/atualiza_pesq"> alterar dados pesquisador </a>
+       {{else}}
+       <a href="/atualiza_cid"> alterar dados cidadão</a>
+       {{/if}}
+       <br>
+       <a href="/"> --  Logout --  </a>
+       
+       <h1> PAGINA INICIAL </h1>
+       <div>
+            <h2>{{dados_perfil.dataValues.nome}} </h2>
+            
+       </div>
+       
+       <ul>Amigos:
+             
+       {{#each lista_pesquisadores}}
+             <li><a href="/feed/pesquisador/{{dataValues.id}}">{{dataValues.nome}}</a></li>
+       {{/each}}
+       {{#each lista_cidadaos}}
+             <li><a href="/feed/cidadao/{{dataValues.id}}">{{dataValues.nome}}</a></li>
+       {{/each}}
+       </ul>
+</section>
