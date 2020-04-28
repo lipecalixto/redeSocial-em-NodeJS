@@ -57,11 +57,7 @@ body{
     background-color:rgb(220,220,220);
 }
 
-section{
-    background: white;
-    margin-top: 10px;
-    padding: 5px 20px;
-}
+
 
 section article h1{
     font-family: cursive;
@@ -70,42 +66,95 @@ section article h1{
 }
 
 
+/*cadastro geral*/
 
-#cadastropt1{
-    margin-top: 20px;
+
+#camp1,#camp2,#camp3,#camp4,#camp5{
+    position: relative;
+    left: 25px;
+    font-size: 20px;
+}
+#cpCadastro{
+    border:2px solid black;
+    width: 1130px;
+    position: absolute;
+    left:100px;
+    height: 670px;
+}
+
+#cadastropt1 input[type=email]{
+    position: relative;
+    bottom: 0px;
+    left: 100px;
 
 }
 
-#cadastropt1 input[type=text],
-#cadastropt1 input[type=date],
-#cadastropt1 input[type=email],
-#cadastropt1 input[type=password]
-{
-    width: 100%;
-    border:1px solid gray;
-    margin-bottom: 10px;
-    height:20px;
+#cadastropt1 input[type=date]{
+    position: relative;
+    bottom: 0px;
+    left: 30px;
+
 }
 
-#cadastropt1 input[type=radio]{
-    margin:10px;
-}
-input:focus:invalid { 
-    box-shadow: 0 0 5px #ff0000; border-color: #ff0000; 
-}
+#cadastropt1 input[type=password]{
+    position: relative;
+    bottom: 0px;
+    left: 152px;
 
-.alerta_erro{
-    background-color:rgb(239,214,255);
-    font-weight: bold;
+}
+#cadastropt1 input[type=text]{
+    position: relative;
+    bottom: 0px;
+    left: 60px;
+
+}
+#confi_senha{
+    position: relative;
+    bottom: 0px;
+    left: -92px;
+}
+#pos_fieldset{
+    margin-left: 10px;
+}
+.rad_tam{
+    font-size: 20px;
+}
+.tam_rad2{
+    width: 50px;
+    height: 15px;
+}
+#cadastropt1 button[type=submit]{
+    margin: 5px 2px;
+    display:inline;
+    border:0;
+    border-radius: 20px;
+    background-color: royalblue;
+    color:white;
+    width:100px;
     padding: 5px;
-    margin:2px;
-    border-radius: 10px;
+    cursor:pointer;
+    position: relative;
+    
+}
+#btn_cad1{
+    top: 6px;
 }
 
-.oculta{
-    display:none;
+#cadastropt1 button[type=submit]:hover{
+    
+    background-color: blue;
+    color:white;
+   
 }
 
-.saudacao{
-    color:blue;
-}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,46 +1,29 @@
-<header class="container-md" class="p-3 mb-2 bg-info text-white">
-       <img src="./imagens/logo.png" alt="">
-        <div class="login">
-            <form action="/autenticacao" name="cpLogin" method="POST">
-                <input type="email" name="login" placeholder="E-mail...">
-                <input type="password" name="senha" placeholder="Senha...">
-                
-                <input type="submit" value="Entrar">
-            </form>
-        
-            <button class='btnCadastre'>Cadastre-se</button>
-            {{#each erros_login}}
-                <div class="alerta_erro">{{texto}}</div>
-            {{else}}
-
-            {{/each}}
-        </div>
-                <div class="clear"></div>
-    </header>
-    
+<a href="/">Voltar a página inicial</a>
 <section>
-  
         <article id="cpCadastro">
         <h1>Formulário de Cadastro</h1><hr>
+        
         {{#each erros}}
-                <div class="alerta_erro">{{texto}}</div>
+                <div class="alert alert-danger" role="alert">{{texto}}</div>
             {{else}}
 
             {{/each}}
             <div id="cadastropt1">
-                <form action="/cadastro_geral" method="POST">
-                    Nome Completo: <input type="text" name="nome" placeholder=" Somente letras " pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" >
-                    Data de nascimento: <input type="date" name="data_nasc"  required>
-                    E-mail: <input type="email" name="email" placeholder=" Digite um email válido " > 
-                    Senha: <input type="password" name="senha" placeholder=" Deve conter no mínino 8 caracteres ">
-                    Confirmar senha: <input type="password" name="csenha" placeholder=" Repita a senha informada anteriormente " >
-                    <fieldset>
-                        <legend><strong>Tipo de usuário</strong></legend>
-                        <input type="radio" name="tipouser"  value="pesquisador" id="tipoP"><label for="tipoP">Pesquisador</label><br>
-                        <input type="radio" name="tipouser"  value="cidadao" id="tipoC" checked><label for="tipoC">Cidadão</label>
-                    </fieldset>
-                    
-                    <button type="submit" >Verificar</button>
+                <form action="/cadastro_geral" id='cadasmon' method="POST">
+                    Nome Completo: <input type="text" name="nome" id="camp1" placeholder=" Somente letras " pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" >
+                    Data de nascimento: <input type="date" name="data_nasc" id="camp5"  required>
+                    E-mail: <input type="email" name="email" id="camp4" placeholder=" Digite um email válido " > 
+                    Senha: <input type="password" name="senha" id="camp2" placeholder=" Deve conter no mínino 8 caracteres ">
+                    Confirmar senha: <input type="password" name="csenha" id="camp3" placeholder=" Repita a senha informada anteriormente " >
+
+                    <div id="pos_fieldset">
+                        <fieldset>
+                            <legend><strong>Tipo de usuário</strong></legend>
+                            <input type="radio" name="tipouser"  value="pesquisador" id="tipoP" class='tam_rad2'><label for="tipoP" class='rad_tam'>Pesquisador</label><br>
+                            <input type="radio" name="tipouser"  value="cidadao" id="tipoC" class='tam_rad2' checked><label for="tipoC" class='rad_tam'>Cidadão</label>
+                        </fieldset>
+                    </div>
+                    <button type="submit" id="btn_cad1">Verificar</button>
                 </form>
             </div>
         </article>

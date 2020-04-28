@@ -1,28 +1,76 @@
 <header>
+      <nav class="navbar navbar-light bg-light">
+            <form action="./busca_membro" class="form-inline" method="POST" >
+                  <input class="form-control mr-sm-2" type="search" name="nome_pesquisado" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+      </nav>
 
-    </header>
+     {{#if encontrou_membro}}
+      <div class="list-group">
+            {{#each pesquisadores}}
+      
+                  <a href="/visita/pesquisador/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a>
+            {{/each}}
+      
+            {{#each cidadaos}}
+              <a href="/visita/cidadao/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a>
+            {{/each}}
+
+            {{else}}
+      </div>
+      {{/if}}
+</header>
 <section>
+
        {{#if eh_pesquisador}}
-       <a href="/atualiza_pesq"> alterar dados pesquisador </a>
+       <a href="/atualiza_pesq/{{dados_perfil.dataValues.id}}"> alterar dados pesquisador </a>
        {{else}}
-       <a href="/atualiza_cid"> alterar dados cidadão</a>
+       <a href="/atualiza_cid/{{dados_perfil.dataValues.id}}"> alterar dados cidadão</a>
        {{/if}}
        <br>
        <a href="/"> --  Logout --  </a>
+
+      {{#each erros_postagem}}
+            <div class="alert alert-danger" role="alert">{{texto}}</div>
+      {{else}}
+
+      {{/each}}
+      <form action="./add_postagem" method="POST">
+            <div class="form-group">
+            <label for="exampleFormControlTextarea1">Postagem:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="texto_postagem" >{{postagem_editar.dataValues.conteudo}}</textarea>
+            </div> 
+            <button type="submit" class="btn btn-light">Publicar</button>        
+      </form>       
        
        <h1> PAGINA INICIAL </h1>
        <div>
             <h2>{{dados_perfil.dataValues.nome}} </h2>
-            
+            <br>
+            <h5>{{dados_perfil.dataValues.escolaridade}}</h3>
+            <h5>{{dados_perfil.dataValues.nivel_formacao}}</h3>
+            <h5>Nascimento:{{dados_perfil.dataValues.datanasc}}</h3>
        </div>
        
-       <ul>Amigos:
+       <ul>Seguidores:
              
        {{#each lista_pesquisadores}}
-             <li><a href="/feed/pesquisador/{{dataValues.id}}">{{dataValues.nome}}</a></li>
+             <li><a href="/visita/pesquisador/{{dataValues.id}}">{{dataValues.nome}}</a></li>
        {{/each}}
        {{#each lista_cidadaos}}
-             <li><a href="/feed/cidadao/{{dataValues.id}}">{{dataValues.nome}}</a></li>
+             <li><a href="/visita/cidadao/{{dataValues.id}}">{{dataValues.nome}}</a></li>
        {{/each}}
        </ul>
+     
+     
+     <h1>Postagens</h1>
+      {{#each postagens}}
+            <small>{{dataValues.createdAt}}</small>
+            <div class="alert alert-danger" role="alert">{{dataValues.conteudo}}</div>
+            <a href="/deletar_postagem/{{dataValues.id}}"><button>Deletar</button></a> <a href="/atualiza_postagem/{{dataValues.id}}">Editar</a> 
+            <hr>
+      {{else}}
+
+      {{/each}}
 </section>

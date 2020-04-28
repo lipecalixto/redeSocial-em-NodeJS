@@ -1,0 +1,35 @@
+<header>
+
+</header>
+<section>
+       <a href="/pessoal/{{tipo_usuario}}/{{id_usuario}}/">Voltar para sua página</a>
+       <h1> PAGINA INICIAL do Amigo</h1>
+       <div>
+            <h2>{{dados_perfil.dataValues.nome}} </h2>
+            <br>
+            <h5>{{dados_perfil.dataValues.escolaridade}}</h3>
+            <h5>{{dados_perfil.dataValues.nivel_formacao}}</h3>
+            <h5>Nascimento:{{dados_perfil.dataValues.datanasc}}</h3>
+            
+       </div>
+       
+       <ul>Seguidores:
+             
+       {{#each lista_pesquisadores}}
+             <li><a href="/visita/pesquisador/{{dataValues.id}}">{{dataValues.nome}}</a></li>
+       {{/each}}
+       {{#each lista_cidadaos}}
+             <li><a href="/visita/cidadao/{{dataValues.id}}">{{dataValues.nome}}</a></li>
+       {{/each}}
+       </ul>
+
+      <h1>Postagens</h1>
+      {{#each postagens}}
+            <small>{{dataValues.createdAt}}</small>
+            <div class="alert alert-danger" role="alert">{{dataValues.conteudo}}</div>Curtidas:{{dataValues.curtidas}}
+            <a href="/curtir/{{dataValues.id}}">Curtir</a>
+            <hr>
+      {{else}}
+
+      {{/each}}       
+</section>

@@ -1,14 +1,20 @@
 
 <section>
-        <a href="feed/cidadao/{{cidadao.dataValues.id}}"> Voltar a página inicial</a>
+        <a href="/pessoal/cidadao/{{cidadao.dataValues.id}}"> Voltar a página inicial</a>
         <article id="cpCadastro">
     <h1>Atualização de dados - Cidadão</h1><hr>
-    {{#each erros_cid}}
-                <div class="alerta_erro">{{texto}}</div>
-            {{else}}
+        {{#each erros_cid}}
+            <div class="alert alert-danger">{{texto}}</div>
+        {{else}}
+        {{/each}}
+        
+        {{#if atualizou}}
+            <div class="alert alert-success" role="alert">Dados atualizados com sucesso!</div>
+        {{else}}
+        {{/if}}
+        
 
-            {{/each}}
-            {{msg}}
+
                 <div id="cadastropt1">
                     <form action="/att_cid/{{cidadao.dataValues.id}}" method="POST">
                         Nome Completo:<input type="text" name="nome" value="{{cidadao.dataValues.nome}}"  pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" >

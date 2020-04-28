@@ -2,11 +2,20 @@
        <img src="./imagens/logo.png" alt="">
         <div class="clear"></div>
     </header>
+    <a href="/">Voltar a página inicial</a>
+        {{#if novaConta}}
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Cadastro realizado com sucesso!</h4>
+                <p>Parabéns {{novo_pesquisador.dataValues.nome}} agora você faz parte da EderOne.</p>
+                <p class="mb-0">Siga para a <a href="/">página inicial</a> da rede social e efetue o login.</p>
+            </div>
+        {{else}}
+        {{/if}}
 <section>
         <article id="cpCadastro">
         <h1>Formulário de Cadastro - Pesquisador</h1><hr>
         {{#each erros_pes}}
-                <div class="alerta_erro">{{texto}}</div>
+                <div class="alert alert-danger" role="alert">{{texto}}</div>
             {{else}}
 
             {{/each}}

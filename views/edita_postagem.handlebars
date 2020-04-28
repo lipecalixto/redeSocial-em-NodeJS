@@ -1,0 +1,13 @@
+      
+    {{#each erros_postagem}}
+        <div class="alert alert-danger" role="alert">{{texto}}</div>
+    {{else}}
+    {{/each}}
+
+    <form action="/att_postagem/{{postagem.dataValues.id}}" method="POST">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Postagem:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="novo_texto" >{{postagem.dataValues.conteudo}}</textarea>
+        </div> 
+        <button type="submit" class="btn btn-light">Publicar</button>        
+    </form> 

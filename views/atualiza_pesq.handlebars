@@ -1,19 +1,21 @@
 
 <section>
-        <a href="feed/pesquisador/{{pesquisador.dataValues.id}}"> Voltar a página inicial</a>
+        <a href="/pessoal/pesquisador/{{pesquisador.dataValues.id}}"> Voltar a página inicial</a>
         <article id="cpCadastro">
     <h1>Atualização de dados - Pesquisador</h1><hr>
     {{#each erros_pes}}
-                <div class="alerta_erro">{{texto}}</div>
-            {{else}}
+        <div class="alert alert-danger">{{texto}}</div>
+    {{else}}
+    {{/each}}
 
-            {{/each}}
-            {{erro}}
-            {{msg_sucess}}
+    {{#if atualizou}}
+        <div class="alert alert-success" role="alert">Dados atualizados com sucesso!</div>
+    {{else}}
+    {{/if}}
                 <div id="cadastropt1">
-                    <form action="/att_pesq" method="POST">
+                    <form action="/att_pesq/{{pesquisador.dataValues.id}}" method="POST">
                         Nome Completo:<input type="text" name="nome" value="{{pesquisador.dataValues.nome}}"  pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" >
-                        Data de nascimento:{{data_nasc}} <input type="date" name="data_nasc">
+                        Data de nascimento:{{pesquisador.dataValues.datanasc}} <input type="date" name="data_nasc">
                         E-mail: <input type="email" name="email" value="{{pesquisador.dataValues.email}}" > 
                         <hr>
                         Data em que comecei a trabalhar com ciência de dados:{{pesquisador.dataValues.data_inicio_cd}} <input type="date" name="data_inicio" >
@@ -68,7 +70,7 @@
                             <option value="Pós-graduação (Stricto sensu, nível doutor) - Completo">Pós-graduação (Stricto sensu, nível doutor) - Completo</option>
                         </select>
                         <br>
-                            Instituicão de formação:<input type="text" name="local_form" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{instituicao_formacao}}">
+                            Instituicão de formação:<input type="text" name="local_form" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{pesquisador.dataValues.instituicao_formacao}}">
                         </fieldset>
                         Currículos Latters: <input type="text" name="linkcv" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{pesquisador.dataValues.link_cv}}">
                         Tópicos de interesse: <input type="text" name="pes_topicos" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{pesquisador.dataValues.topicos_interesse}}">
