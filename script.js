@@ -8,8 +8,7 @@ function verificaIdade(ano_nasc){
   return idade
 }
 
-//testee
-//teste 2
+//curtidas
 const express=require('express')
 const app=express()
 const handlebars = require("express-handlebars")
