@@ -1,20 +1,32 @@
-<a href="/">Voltar a página inicial</a>
-<section>
+<header>
+    <a href="/" id="btn_voltar" >Voltar a página inicial</a>
+    <img src="/imagens/logo.png" alt="">
+    <div class="clear"></div>
+         
+</header>
+        
+<section id="cp_ca1">
         <article id="cpCadastro">
         <h1>Formulário de Cadastro</h1><hr>
-        
-        {{#each erros}}
-                <div class="alert alert-danger" role="alert">{{texto}}</div>
-            {{else}}
+                {{#each erros}}
+            <div class="alert alert-danger" role="alert">{{texto}}</div>
+        {{else}}
 
-            {{/each}}
+        {{/each}}
             <div id="cadastropt1">
                 <form action="/cadastro_geral" id='cadasmon' method="POST">
-                    Nome Completo: <input type="text" name="nome" id="camp1" placeholder=" Somente letras " pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" >
-                    Data de nascimento: <input type="date" name="data_nasc" id="camp5"  required>
-                    E-mail: <input type="email" name="email" id="camp4" placeholder=" Digite um email válido " > 
-                    Senha: <input type="password" name="senha" id="camp2" placeholder=" Deve conter no mínino 8 caracteres ">
-                    Confirmar senha: <input type="password" name="csenha" id="camp3" placeholder=" Repita a senha informada anteriormente " >
+                    
+                    <div id="camp1"> Nome Completo: <input type="text" name="nome" id="camp1" placeholder=" Somente letras " pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" > </div>
+                    
+                    <div id="camp2"> Senha: <input type="password" name="senha" id="camp2" placeholder=" Deve conter no mínino 8 caracteres "> </div>
+                    
+                    <div id="camp3"> Confirmar senha: <span id="confi_senha"> <input type="password" name="csenha" id="camp3" placeholder=" Repita a senha informada anteriormente " > </span> </div>
+
+                    <div id="camp4"> E-mail: <input type="email" name="email" id="camp4" placeholder=" Digite um email válido " > </div>
+
+                    <div id="camp5"> Data de nascimento: <input type="date" name="data_nasc" id="camp5"  required>  </div>
+                    
+                      
 
                     <div id="pos_fieldset">
                         <fieldset>
@@ -23,7 +35,10 @@
                             <input type="radio" name="tipouser"  value="cidadao" id="tipoC" class='tam_rad2' checked><label for="tipoC" class='rad_tam'>Cidadão</label>
                         </fieldset>
                     </div>
-                    <button type="submit" id="btn_cad1">Verificar</button>
+                    <div class="centraliza">
+                        <button type="submit" id="btn_cad1">Verificar</button>
+                    </div>
+                    
                 </form>
             </div>
         </article>

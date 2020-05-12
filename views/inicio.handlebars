@@ -2,12 +2,18 @@
        <img src="/imagens/logo.png" alt="">
         <div class="login">
             <form action="/autenticacao" name="cpLogin" method="POST">
-                <input type="email" name="login" placeholder="E-mail...">
-                <input type="password" name="senha" placeholder="Senha...">
+                <input type="email" name="login" placeholder="E-mail..." class="tam_campo">
+                <input type="password" name="senha" placeholder="Senha..." class="tam_campo">
                 
-                <input type="submit" value="Entrar">
+                <div class='pos_botao_login'>
+                
+                <input type="submit" value="Entrar" id="btn_cadas">
+                
+                
+                </div>
+
             </form>
-            <a href="cadastro/"><button class="btn btn-primary">Cadastre-se</button></a>
+            <a href="cadastro/"><button class="btn btn-primary" id="btn_cadas">Cadastre-se</button></a>
             
             {{#each erros_login}}
                 <div class="alert alert-danger" role="alert">{{texto}}</div>

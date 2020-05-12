@@ -1,9 +1,17 @@
-      
+<header>
+    <nav id="nav_topo">
+        <a href="/" class="btn btn-primary">  Sair  </a>
+    </nav>
+</header>
+<section>
+<a href="/pessoal/{{tipo_usuario}}/{{id_usuario}}/">Voltar para sua página</a>
+
+
     {{#each erros_postagem}}
         <div class="alert alert-danger" role="alert">{{texto}}</div>
     {{else}}
     {{/each}}
-
+<div id="formulario_postar">
     <form action="/att_postagem/{{postagem.dataValues.id}}" method="POST">
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Postagem:</label>
@@ -11,3 +19,4 @@
         </div> 
         <button type="submit" class="btn btn-light">Publicar</button>        
     </form> 
+</div>

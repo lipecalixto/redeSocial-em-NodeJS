@@ -1,76 +1,122 @@
 <header>
-      <nav class="navbar navbar-light bg-light">
-            <form action="./busca_membro" class="form-inline" method="POST" >
-                  <input class="form-control mr-sm-2" type="search" name="nome_pesquisado" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      
+      <nav id="nav_topo">
+            <a href="/" class="btn btn-primary">  Sair  </a>
+            {{#if eh_pesquisador}}
+             <a href="/atualiza_pesq/{{dados_perfil.dataValues.id}}"><button class="btn btn-primary">alterar dados pesquisador</button> </a>
+             {{else}}
+             <a href="/atualiza_cid/{{dados_perfil.dataValues.id}}"class="btn_altdados"><button class="btn btn-primary">alterar dados cidadão</button></a>
+             {{/if}}
+            <form action="./busca_membro" class="form-inline" id="busca_membro" method="POST" >
+                  <input class="form-control mr-sm-2" type="search" name="nome_pesquisado" placeholder="nome do membro" aria-label="Search">
+                  <button class="btn btn-info" type="submit">Buscar</button>
+                  
+                  {{#if encontrou_membro}}
+                        <div class="list-group">
+                  {{#each pesquisadores}}
+                        <a href="/visita/pesquisador/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a>
+                  {{/each}}
+      
+                  {{#each cidadaos}}
+                        <a href="/visita/cidadao/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a>
+                  {{/each}}
+                  {{else}}
             </form>
-      </nav>
-
-     {{#if encontrou_membro}}
-      <div class="list-group">
-            {{#each pesquisadores}}
-      
-                  <a href="/visita/pesquisador/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a>
-            {{/each}}
-      
-            {{#each cidadaos}}
-              <a href="/visita/cidadao/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a>
-            {{/each}}
-
-            {{else}}
       </div>
       {{/if}}
+
+      </nav>
+
 </header>
-<section>
 
-       {{#if eh_pesquisador}}
-       <a href="/atualiza_pesq/{{dados_perfil.dataValues.id}}"> alterar dados pesquisador </a>
-       {{else}}
-       <a href="/atualiza_cid/{{dados_perfil.dataValues.id}}"> alterar dados cidadão</a>
-       {{/if}}
-       <br>
-       <a href="/"> --  Logout --  </a>
+<aside id="iside1_pagini">
+            <div>
+                  <div id='foto'> foto </div>
+                  <h2>{{dados_perfil.dataValues.nome}} </h2>
+                  <hr>
+                  {{#if eh_pesquisador}}
+                        <p>Nível de formação: {{dados_perfil.dataValues.nivel_formacao}}</p>
+                        <p>Instituição de Formação: {{dados_perfil.dataValues.instituicao_formacao}}</p>
+                        <p>Local de trabalho: {{dados_perfil.dataValues.cidade}} | {{dados_perfil.dataValues.uf}}</p>
+                        <p>Instituição de Pesquisa: {{dados_perfil.dataValues.instituicao_pesquisa}}</p>
+                        <hr>
+                        <p>E-mail: {{dados_perfil.dataValues.email}}</p>
+                        <p>Nascimento:{{dados_perfil.dataValues.datanasc}}</p>
+                        <p>Início com ciência de dados: {{dados_perfil.dataValues.data_inicio_cd}}</p>
+                        <a href="https://{{dados_perfil.dataValues.link_cv}}/" target="_blank">Currículo Lattes</a>
+                  {{else}}
+                        <p>Escolaridade: {{dados_perfil.dataValues.escolaridade}}</p>
+                        <p>E-mail: {{dados_perfil.dataValues.email}}</p>
+                        <p>Nascimento: {{dados_perfil.dataValues.datanasc}}</p>
 
+
+             
+                  {{/if}}
+               
+                  
+            </div>
+
+             
+            
+</aside>
+
+<div div="corpo_meio">
+<section id="section_ini">
+       
       {{#each erros_postagem}}
             <div class="alert alert-danger" role="alert">{{texto}}</div>
       {{else}}
 
       {{/each}}
-      <form action="./add_postagem" method="POST">
-            <div class="form-group">
-            <label for="exampleFormControlTextarea1">Postagem:</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="texto_postagem" >{{postagem_editar.dataValues.conteudo}}</textarea>
-            </div> 
-            <button type="submit" class="btn btn-light">Publicar</button>        
-      </form>       
+    
+      <div id="formulario_postar">
+            <form action="./add_postagem" method="POST">
+                  <div class="form-group">
+                  <label for="exampleFormControlTextarea1" class="font-weight-bold">Postagem:</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="texto_postagem" placeholder="Comunique-se com os demais membros da rede ...">{{postagem_editar.dataValues.conteudo}}</textarea>
+                  </div> 
+                  <button type="submit" class="btn btn-light">Publicar</button>        
+            </form>
+      </div>       
        
-       <h1> PAGINA INICIAL </h1>
-       <div>
-            <h2>{{dados_perfil.dataValues.nome}} </h2>
-            <br>
-            <h5>{{dados_perfil.dataValues.escolaridade}}</h3>
-            <h5>{{dados_perfil.dataValues.nivel_formacao}}</h3>
-            <h5>Nascimento:{{dados_perfil.dataValues.datanasc}}</h3>
-       </div>
        
-       <ul>Seguidores:
-             
-       {{#each lista_pesquisadores}}
-             <li><a href="/visita/pesquisador/{{dataValues.id}}">{{dataValues.nome}}</a></li>
-       {{/each}}
-       {{#each lista_cidadaos}}
-             <li><a href="/visita/cidadao/{{dataValues.id}}">{{dataValues.nome}}</a></li>
-       {{/each}}
-       </ul>
+       
      
      
      <h1>Postagens</h1>
       {{#each postagens}}
+      <div id="quadro_postagens">
+            
+            <a href="/deletar_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
+            <a href="/atualiza_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
             <small>{{dataValues.createdAt}}</small>
-            <div class="alert alert-danger" role="alert">{{dataValues.conteudo}}</div>
-            <a href="/deletar_postagem/{{dataValues.id}}"><button>Deletar</button></a> <a href="/atualiza_postagem/{{dataValues.id}}">Editar</a> 
+            
+            <div class="clear"></div>
+          <hr> <p>{{dataValues.conteudo}}</p>
+
             <hr>
+            Curtidas:{{dataValues.curtidas}}
+      </div>
       {{else}}
 
       {{/each}}
 </section>
+</div>
+
+
+
+<aside id="iside2_pagini">
+      <div class="list-group">
+             <ul><span id="seguidores"> Seguidores: </span>
+                   
+             {{#each lista_pesquisadores}}
+                   <li><a href="/visita/pesquisador/{{dataValues.id}}" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+             {{/each}}
+             {{#each lista_cidadaos}}
+                   <li><a href="/visita/cidadao/{{dataValues.id}}" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+             {{/each}}
+             </ul>
+      </div>
+</aside>
+
+

@@ -13,9 +13,10 @@ header img{
 
 header {
     padding: 10px;
-    max-width: 1100px;
+    max-width: 100%;
     margin:0 auto;
     background-color:rgb(176,196,222);
+    text-align: center;
     
 }
 
@@ -31,7 +32,7 @@ header .login input[type=submit],
     margin: 5px 2px;
     display:inline;
     border:0;
-    border-radius: 4px;
+    border-radius: 20px;
     background-color: royalblue;
     color:white;
     width:90px;
@@ -67,6 +68,61 @@ section article h1{
 
 
 /*cadastro geral*/
+#cp_ca1{
+    margin: auto;
+    margin-bottom: 30px;
+  
+}
+
+
+#cp_ca1 h1{
+    text-align: center;
+}
+
+#btn_voltar{
+    border-radius: 20px;
+    background-color: royalblue;
+    color:white;
+    
+    padding: 5px;
+    cursor:pointer;
+    float: right;
+}
+
+#cadastropt1 input[type=text],
+#cadastropt1 input[type=date],
+#cadastropt1 input[type=email],
+#cadastropt1 input[type=password]
+{
+    width: 300px;
+    border:1px solid gray;
+    margin-bottom: 10px;
+    
+
+    
+}
+
+
+
+#nav_topo{
+    padding:5px;
+    height: 50px;
+    
+}
+
+#nav_topo a{
+    float: right;
+    margin-top: 0px;
+    margin-right: 5px;
+}
+
+#busca_membro{
+    width: 400px;
+    margin:0 auto;
+    
+}
+
+
 
 
 #camp1,#camp2,#camp3,#camp4,#camp5{
@@ -76,16 +132,20 @@ section article h1{
 }
 #cpCadastro{
     border:2px solid black;
-    width: 1130px;
-    position: absolute;
-    left:100px;
-    height: 670px;
+    width:800px;
+    margin: 0 auto;
+    margin-top:30px ;
+    
+}
+
+#cpCadastro h1{
+    text-align: center;
 }
 
 #cadastropt1 input[type=email]{
     position: relative;
     bottom: 0px;
-    left: 100px;
+    left: 150px;
 
 }
 
@@ -124,6 +184,82 @@ section article h1{
     height: 15px;
 }
 #cadastropt1 button[type=submit]{
+    border:0;
+    border-radius: 20px;
+    background-color: royalblue;
+    color:white;
+    width:100px;
+    padding: 8px;
+    cursor:pointer;
+    position: relative;
+    margin: 10px;
+    
+}
+
+#cadastropt1 button[type=submit]:hover{
+    
+    background-color: blue;
+    color:white;
+   
+}
+
+.centraliza{
+    text-align: center;
+}
+
+/* cadastro cid */
+.sep_cas{
+    margin-left: 20px;
+}
+#btn_cid{
+    position: relative;
+    left: -550px;
+    top:40px;
+}
+
+/* cadastro pes*/
+#font_data{
+    font-size: 20px;
+}
+#pos_date{
+    position: relative;
+    top:8px;
+    left:-30px;
+}
+#pos_cidade{
+    position: relative;
+    left: 180px;
+    bottom: 25px;
+
+}
+#pos_ins{
+    position: relative;
+    
+}
+#pos_cur{
+    position: relative;
+    left:170px;
+    bottom:20px;
+}
+#pos_int{
+    position: relative;
+    left: 170px;
+    bottom:25px;
+}
+
+
+
+/* Inicio */
+.pos_botao_login{
+    position: absolute;
+    margin-right: 60px;
+    right: 250px;
+}
+.tam_campo{
+    position: relative;
+    right: 30px;
+}
+#btn_cadas{
     margin: 5px 2px;
     display:inline;
     border:0;
@@ -134,27 +270,230 @@ section article h1{
     padding: 5px;
     cursor:pointer;
     position: relative;
-    
+  
 }
-#btn_cad1{
-    top: 6px;
-}
-
-#cadastropt1 button[type=submit]:hover{
-    
+#btn_cadas:hover{
     background-color: blue;
     color:white;
-   
+    transition: 1s;
+
+}
+
+/* Pagina inicial */
+
+#btn_sair{
+	margin: 5px 2px;
+    display:inline;
+    border:0;
+    border-radius: 20px;
+    background-color: royalblue;
+    color:white;
+    width:50px;
+    padding: 5px;
+    text-align: center;
+    cursor:pointer;
+    position: absolute;
+    top:4px;
+    left: 1000px;
+}
+
+.btn_altdados{
+	margin: 5px 2px;
+    display:inline;
+    border:0;
+    border-radius: 20px;
+    background-color: royalblue;
+    color:white;
+    width:200px;
+    padding: 5px;
+    text-align: center;
+    cursor:pointer;
+    position: absolute;
+    top:4px;
+    left: 795px; 
+}
+
+#section_ini{
+	border:2px #ecdff4 solid;
+    width: 800px;
+    height: 100%;
+    margin-left: 300px;
+    padding: 20px;
+    
+    
+}
+
+#section_ini h1{
+    font-size: 25px;
+}
+
+#corpo_meio{
+    margin-left: 200px;
+    width: 400px;
+    position:absolute;
+}
+
+#iside1_pagini{
+	border: 1px solid #ecdff4;
+	width: 250px;
+	height: 800px;
+    position: absolute;
+    margin-top: 20px;
+	margin-left: 0px;
+    background-color:#ecdff4 ;
+    padding: 5px 10px;
+}
+
+#iside1_pagini h2{
+    text-align: center;
+    font-size: 22px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+#iside1_pagini p{
+    font-size: 15px;
+}
+
+#iside1_pagini #foto{
+	width: 100px;
+	height: 100px;
+	margin-top: 3px;
+    background-color: gray;
+    text-align: center;
 }
 
 
+#iside2_pagini{
+    top:200px;
+	padding: 2px;
+	position: absolute;
+	right: 0px;
+	text-align: center;
+    background-color:#ecdff4;
 
+}
 
+#seguidores{
+	font-size: 20px;
+	font-weight:bold;
+}
 
+#quadro_postagens{
+    background-color:rgb(230,230,250);
+    margin-top: 20px;
+    padding: 0px 5px 2px 5px;
+}
 
+#quadro_postagens p{
+    margin: 10px;
+    text-align: center;
+}
 
+#quadro_postagens small{
+    font-style: italic;
+    float: right;
+}
 
+#drop_postagem{
+    float:right;
+}
 
+#iside2_pagini ul li{
+	list-style-type:none;
+    font-size: 13px;
+}
 
+#iside2_pagini ul li a{
+	padding: 7px 15px;
+    font-size: 13px;
+}
+/* Atualizar dados cid */
 
+#formulario_postar{
+    width:90%;
+    margin:0 auto;
+    margin-top: 30px;
+    margin-bottom: 60px;
+    background-color:rgb(230,230,250);
+    padding: 5px 10px;
+    border-radius: 10px;
+    border:solid 2px rgb(176,196,222);
+}
 
+#formulario_postar button{
+    margin-bottom: 3px;
+  
+}
+
+#font1{
+	font-size: 13px;
+	position: relative;
+	left: 35px;
+}
+
+#mov1{
+	position: relative;
+	left:3px;
+}
+#mov2{
+	position: relative;
+	right:20px;
+}
+#mov3{
+	position: relative;
+	right:560px;
+	top:140px;
+}
+#btn_voltarpag{
+	margin: 5px 2px;
+    display:inline;
+    border:0;
+    border-radius: 20px;
+    background-color: royalblue;
+    color:white;
+    width:150px;
+    padding: 5px;
+    text-align: center;
+    cursor:pointer;
+    position: absolute;
+    top:630px;
+    left: 210px;
+    font-size: 12px;
+    z-index: 1;
+}
+
+/* Atualizar dados pes */
+
+#mov4{
+	position: relative;
+	left:-27px;
+	top:10px;
+}
+#mov5{
+	position: relative;
+	left:103px;	
+}
+#mov6{
+	position: relative;
+	right:44px;
+}
+#mov7{
+	position: relative;
+	right:19px;
+}
+#btn_voltarpag2{
+	margin: 5px 2px;
+    display:inline;
+    border:0;
+    border-radius: 20px;
+    background-color: royalblue;
+    color:white;
+    width:150px;
+    padding: 5px;
+    text-align: center;
+    cursor:pointer;
+    position: absolute;
+    font-size: 12px;
+    
+}

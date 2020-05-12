@@ -80,6 +80,7 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
 
     }else if(req.params.tipo=='pesquisador'){
       Pesquisador.findOne({where:{'id':req.params.id}}).then(function(dados_perfil){
+        var eh_pesquisador=true
         Postagem.findAll({order:[['id','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
           Pesquisador.findAll().then(function(lista_pesquisadores){
             Cidadao.findAll({where:{id:{[Op.not]:req.params.id}}}).then(function(lista_cidadaos){
@@ -96,6 +97,7 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
   }else if(req.params.pagina=='visita'){
     if(req.params.tipo=='cidadao'){
       Cidadao.findOne({where:{'id':req.params.id}}).then(function(dados_perfil){
+        var eh_pesquisador=false
         Postagem.findAll({order:[['id','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
           Pesquisador.findAll().then(function(lista_pesquisadores){
             Cidadao.findAll({where:{id:{[Op.not]:req.params.id}}}).then(function(lista_cidadaos){
@@ -109,6 +111,7 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
 
     }else if(req.params.tipo=='pesquisador'){
       Pesquisador.findOne({where:{'id':req.params.id}}).then(function(dados_perfil){
+        var eh_pesquisador=true
         Postagem.findAll({order:[['id','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
           Pesquisador.findAll().then(function(lista_pesquisadores){
             Cidadao.findAll({where:{id:{[Op.not]:req.params.id}}}).then(function(lista_cidadaos){
@@ -379,7 +382,7 @@ app.get('/curtir/:id',function (req,res){
 
  Postagem.increment('curtidas',{where:{id:req.params.id}}).then(function(){
     Postagem.findOne({where:{id:req.params.id}}).then(function(postagem){
-    
+      console.log(postagem)
       res.redirect(`/visita/${postagem.tipo_membro}/${postagem.id_membro}`)
     })
     
@@ -389,34 +392,39 @@ app.get('/curtir/:id',function (req,res){
 app.post('/pessoal/:tipo/:id/busca_membro',async (req,res) => {
   Cidadao.findAll().then(function(lista_cidadaos){
     Pesquisador.findAll().then(function(lista_pesquisadores){
-      Cidadao.findAll({where:{nome:{[Op.like]:`%${req.body.nome_pesquisado}%`}}}).then(function(cidadaos){
-        Pesquisador.findAll({where:{nome:{[Op.like]:`%${req.body.nome_pesquisado}%`}}}).then(function(pesquisadores){
-          if(req.params.tipo=='pesquisador'){
-            Pesquisador.findOne({ where: { id:req.params.id }}).then(function(dados_perfil){
-              var tipo='pesquisador'
-              var encontrou_membro=false
-              if(cidadaos!=null || pesquisadores!=null){
-                encontrou_membro=true
-              }
-              res.render('pagina_inicial',({dados_perfil,encontrou_membro,pesquisadores,cidadaos,
-                tipo_usuario,id_usuario,lista_cidadaos,lista_pesquisadores}))
-    
-            })
-          }else{
-            Cidadao.findOne({ where: { id:req.params.id } }).then(function(dados_perfil){
-              var tipo='cidadao'
-              var encontrou_membro=false
-              if(cidadaos!=null || pesquisadores!=null){
-                encontrou_membro=true
-              }
-              res.render('pagina_inicial',({dados_perfil,encontrou_membro,pesquisadores,cidadaos,
-                tipo_usuario,id_usuario,lista_pesquisadores,lista_cidadaos}))
-    
-            })
-          }
-    
+      Postagem.findAll({order:[['id','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
+        Cidadao.findAll({where:{nome:{[Op.like]:`%${req.body.nome_pesquisado}%`}}}).then(function(cidadaos){
+          Pesquisador.findAll({where:{nome:{[Op.like]:`%${req.body.nome_pesquisado}%`}}}).then(function(pesquisadores){
+            if(req.params.tipo=='pesquisador'){
+              Pesquisador.findOne({ where: { id:req.params.id }}).then(function(dados_perfil){
+                var tipo='pesquisador'
+                var encontrou_membro=false
+                var eh_pesquisador=true
+                if(cidadaos!=null || pesquisadores!=null){
+                  encontrou_membro=true
+                }
+                res.render('pagina_inicial',({dados_perfil,encontrou_membro,pesquisadores,cidadaos,
+                  tipo_usuario,id_usuario,lista_cidadaos,lista_pesquisadores,eh_pesquisador,postagens}))
+      
+              })
+            }else{
+              Cidadao.findOne({ where: { id:req.params.id } }).then(function(dados_perfil){
+                var tipo='cidadao'
+                var encontrou_membro=false
+                var eh_pesquisador=false
+                if(cidadaos!=null || pesquisadores!=null){
+                  encontrou_membro=true
+                }
+                res.render('pagina_inicial',({dados_perfil,encontrou_membro,pesquisadores,cidadaos,
+                  tipo_usuario,id_usuario,lista_pesquisadores,lista_cidadaos,eh_pesquisador,postagens}))
+      
+              })
+            }
+      
+          })
         })
       })
+
     })
   })
 })
@@ -795,7 +803,7 @@ app.post('/att_pesq/:id', async (req,res) =>{
     erros_pes.push({texto:'Link do Currículos Latters incorreto.'})
   }else{
     Pesquisador.update({
-      instituicao_pesquisa:req.body.instituicao
+      link_cv:req.body.linkcv
     }, {
       where: {
         id: {

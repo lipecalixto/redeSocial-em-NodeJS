@@ -1,35 +1,71 @@
 <header>
+      <nav id="nav_topo">
+            <a href="/" class="btn btn-primary">  Sair  </a>
+                        
+      </nav>
 
 </header>
-<section>
-       <a href="/pessoal/{{tipo_usuario}}/{{id_usuario}}/">Voltar para sua página</a>
-       <h1> PAGINA INICIAL do Amigo</h1>
-       <div>
-            <h2>{{dados_perfil.dataValues.nome}} </h2>
-            <br>
-            <h5>{{dados_perfil.dataValues.escolaridade}}</h3>
-            <h5>{{dados_perfil.dataValues.nivel_formacao}}</h3>
-            <h5>Nascimento:{{dados_perfil.dataValues.datanasc}}</h3>
-            
-       </div>
-       
-       <ul>Seguidores:
-             
-       {{#each lista_pesquisadores}}
-             <li><a href="/visita/pesquisador/{{dataValues.id}}">{{dataValues.nome}}</a></li>
-       {{/each}}
-       {{#each lista_cidadaos}}
-             <li><a href="/visita/cidadao/{{dataValues.id}}">{{dataValues.nome}}</a></li>
-       {{/each}}
-       </ul>
 
+      <a href="/pessoal/{{tipo_usuario}}/{{id_usuario}}/">Voltar para sua página</a>
+
+<aside id="iside1_pagini">
+            <div>
+                  <div id='foto'> foto </div>
+                  <h2>{{dados_perfil.dataValues.nome}} </h2>
+                  <hr>
+                  {{#if eh_pesquisador}}
+                        <p>Nível de formação: {{dados_perfil.dataValues.nivel_formacao}}</p>
+                        <p>Instituição de Formação: {{dados_perfil.dataValues.instituicao_formacao}}</p>
+                        <p>Local de trabalho: {{dados_perfil.dataValues.cidade}} | {{dados_perfil.dataValues.uf}}</p>
+                        <p>Instituição de Pesquisa: {{dados_perfil.dataValues.instituicao_pesquisa}}</p>
+                        <hr>
+                        <p>E-mail: {{dados_perfil.dataValues.email}}</p>
+                        <p>Nascimento:{{dados_perfil.dataValues.datanasc}}</p>
+                        <p>Início com ciência de dados: {{dados_perfil.dataValues.data_inicio_cd}}</p>
+                        <a href="https://{{dados_perfil.dataValues.link_cv}}/" target="_blank">Currículo Lattes</a>
+                  {{else}}
+                        <p>Escolaridade: {{dados_perfil.dataValues.escolaridade}}</p>
+                        <p>E-mail: {{dados_perfil.dataValues.email}}</p>
+                        <p>Nascimento: {{dados_perfil.dataValues.datanasc}}</p>
+
+
+             
+                  {{/if}}
+               
+                  
+            </div>
+    
+</aside>
+
+<aside id="iside2_pagini">
+      <div class="list-group">
+            <ul><span id="seguidores">Seguidores:</span>
+                 
+            {{#each lista_pesquisadores}}
+                  <li><a href="/visita/pesquisador/{{dataValues.id}}" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+            {{/each}}
+            {{#each lista_cidadaos}}
+                  <li><a href="/visita/cidadao/{{dataValues.id}}" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+            {{/each}}
+            </ul>
+      </div>
+</aside>
+<div div="corpo_meio">
+<section id="section_ini">    
       <h1>Postagens</h1>
       {{#each postagens}}
+      <div id="quadro_postagens">
             <small>{{dataValues.createdAt}}</small>
-            <div class="alert alert-danger" role="alert">{{dataValues.conteudo}}</div>Curtidas:{{dataValues.curtidas}}
-            <a href="/curtir/{{dataValues.id}}">Curtir</a>
+            
+            <div class="clear"></div>
+          <hr> <p>{{dataValues.conteudo}}</p>
+
             <hr>
+            Curtidas: {{dataValues.curtidas}}
+            <a href="/curtir/{{dataValues.id}}">Curtir</a>
+      </div>
       {{else}}
 
-      {{/each}}       
+      {{/each}}    
 </section>
+</div>

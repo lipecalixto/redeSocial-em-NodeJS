@@ -22,7 +22,7 @@ const Pesquisador=bd.sequelize.define('pesquisadores',{
     uf:{
         type:bd.Sequelize.STRING
     },
-    instituicao_pesquisa:{
+    instituicao_pesquisa:{    
         type:bd.Sequelize.STRING
     },
     nivel_formacao:{
