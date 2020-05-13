@@ -16,16 +16,19 @@ const bodyParser = require('body-parser')
 const Cidadao=require("./models/Cidadao")
 const Pesquisador=require("./models/Pesquisador")
 const Postagem=require("./models/Postagem")
+const Publicacao=require("./models/Publicacao")
 const Curtida=require("./models/Curtida")
 const banco=require('./models/Banco')
 const path=require("path")
 const Op =banco.Sequelize.Op;
 
 
+
+
 var id_usuario=-1
 var tipo_usuario='####'
 var editar_postagem={}
-
+var editar_publicacao={}
 var eh_pesquisador=null
 
 var dados_comuns={
@@ -85,8 +88,10 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
         Postagem.findAll({order:[['id','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
           Pesquisador.findAll().then(function(lista_pesquisadores){
             Cidadao.findAll({where:{id:{[Op.not]:req.params.id}}}).then(function(lista_cidadaos){
-              res.render('pagina_inicial',{lista_cidadaos:lista_cidadaos,lista_pesquisadores:lista_pesquisadores,
-                dados_perfil:dados_perfil,eh_pesquisador:eh_pesquisador,postagens})
+              Publicacao.findAll({order:[['curtidas','DESC']],where:{id_pesquisador:req.params.id}}).then(function(publicacoes){
+                res.render('pagina_inicial',{lista_cidadaos:lista_cidadaos,lista_pesquisadores:lista_pesquisadores,
+                  dados_perfil:dados_perfil,eh_pesquisador:eh_pesquisador,postagens,publicacoes})
+              })
             })
           })
         })
@@ -99,7 +104,7 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
     if(req.params.tipo=='cidadao'){
       Cidadao.findOne({where:{'id':req.params.id}}).then(function(dados_perfil){
         var eh_pesquisador=false
-        Postagem.findAll({order:[['id','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
+        Postagem.findAll({order:[['curtidas','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
           Pesquisador.findAll().then(function(lista_pesquisadores){
             Cidadao.findAll({where:{id:{[Op.not]:req.params.id}}}).then(function(lista_cidadaos){
               res.render('pagina_visita',{lista_cidadaos:lista_cidadaos,lista_pesquisadores:lista_pesquisadores,
@@ -113,11 +118,13 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
     }else if(req.params.tipo=='pesquisador'){
       Pesquisador.findOne({where:{'id':req.params.id}}).then(function(dados_perfil){
         var eh_pesquisador=true
-        Postagem.findAll({order:[['id','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
+        Postagem.findAll({order:[['curtidas','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
           Pesquisador.findAll().then(function(lista_pesquisadores){
             Cidadao.findAll({where:{id:{[Op.not]:req.params.id}}}).then(function(lista_cidadaos){
-              res.render('pagina_visita',{lista_cidadaos:lista_cidadaos,lista_pesquisadores:lista_pesquisadores,
-                dados_perfil:dados_perfil,eh_pesquisador:eh_pesquisador,id_usuario,tipo_usuario,postagens})
+              Publicacao.findAll({order:[['curtidas','DESC']],where:{id_pesquisador:req.params.id}}).then(function(publicacoes){
+                res.render('pagina_visita',{lista_cidadaos:lista_cidadaos,lista_pesquisadores:lista_pesquisadores,
+                  dados_perfil:dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,publicacoes})
+              })
             })
           })
         })  
@@ -317,7 +324,8 @@ app.post('/pessoal/:tipo/:id/add_postagem',function(req,res){
       Cidadao.findAll().then(function(lista_cidadaos){
         Pesquisador.findAll().then(function(lista_pesquisadores){
           Pesquisador.findOne({ where: { id:req.params.id }}).then(function(dados_perfil){
-            res.render('pagina_inicial',{erros_postagem,dados_perfil,lista_cidadaos,lista_pesquisadores})
+            eh_pesquisador=true
+            res.render('pagina_inicial',{erros_postagem,dados_perfil,lista_cidadaos,lista_pesquisadores,eh_pesquisador})
           })
 
         })
@@ -335,6 +343,59 @@ app.post('/pessoal/:tipo/:id/add_postagem',function(req,res){
   }
 })
 
+app.post('/pessoal/:tipo/:id/add_publicacao',function(req,res){
+
+  var dt=new Date()
+  var ano_atual= dt.getFullYear()
+  var erros_publicacao=[]
+
+  if(req.body.titulo_pub==null || req.body.titulo_pub==" " || req.body.titulo_pub==""){
+    erros_publicacao.push({texto:'Insira o título do artigo.'})
+  }
+
+  if(req.body.local_pub==null || req.body.local_pub==" " || req.body.local_pub==""){
+    erros_publicacao.push({texto:'Insira o local de publicação.'})
+  }
+
+  if(req.body.ano_pub>ano_atual || req.body.ano_pub<(ano_atual-100)){
+    erros_publicacao.push({texto:'Informe o ano de publicação correto.'})
+  }
+
+  if(req.body.resumo_pub==null || req.body.resumo_pub==" " || req.body.resumo_pub==""){
+    erros_publicacao.push({texto:'Preencha um breve resumo de sua publicação.'})
+  }
+
+  
+  
+  if(erros_publicacao.length>0){
+    if(req.params.tipo=='pesquisador'){
+      eh_pesquisador=true
+      Cidadao.findAll().then(function(lista_cidadaos){
+        Pesquisador.findAll().then(function(lista_pesquisadores){
+          Pesquisador.findOne({ where: { id:req.params.id }}).then(function(dados_perfil){
+            res.render('pagina_inicial',{erros_publicacao,dados_perfil,lista_cidadaos,lista_pesquisadores,eh_pesquisador})
+          })
+
+        })
+      })
+
+    }
+  }else{
+  
+    Publicacao.create({
+      id_pesquisador:id_usuario,
+      titulo_publicacao: req.body.titulo_pub,
+      local_publicacao: req.body.local_pub,
+      ano_publicacao:req.body.ano_pub,
+      url_publicacao:req.body.url_pub,
+      tags_publicacao:req.body.tags_pub,
+      resumo_publicacao:req.body.resumo_pub
+  }).then(function(){
+    res.redirect("./")
+  })
+  }
+})
+
 
 
 app.get('/deletar_postagem/:id', function(req,res){
@@ -343,14 +404,23 @@ app.get('/deletar_postagem/:id', function(req,res){
   })
 })
 
+app.get('/deletar_publicacao/:id', function(req,res){
+  Publicacao.destroy({where:{id:req.params.id}}).then(function(){
+    res.redirect(`/pessoal/${tipo_usuario}/${id_usuario}/`)
+  })
+})
+
 
 app.get('/atualiza_postagem/:id', function(req,res){
   Postagem.findOne({where:{id:req.params.id}}).then(function(postagem){
-    res.render('edita_postagem',{postagem})
-   
-    
+    res.render('edita_postagem',{postagem,tipo_usuario,id_usuario})  
   })
+})
 
+app.get('/atualiza_publicacao/:id', function(req,res){
+  Publicacao.findOne({where:{id:req.params.id}}).then(function(publicacao){
+    res.render('edita_publicacao',{publicacao,tipo_usuario,id_usuario})  
+  })
 })
 
 app.post('/att_postagem/:id', function (req,res){
@@ -362,7 +432,7 @@ app.post('/att_postagem/:id', function (req,res){
 
   if(erros_postagem.length>0){
     Postagem.findOne({where:{id:req.params.id}}).then(function(postagem){
-      res.render('edita_postagem',{postagem,erros_postagem})
+      res.render('edita_postagem',{postagem,erros_postagem,tipo_usuario,id_usuario})
     })
   }else{
     Postagem.update({
@@ -371,6 +441,50 @@ app.post('/att_postagem/:id', function (req,res){
       where: {
         id: {
           [Op.eq]:req.params.id
+        }
+      }
+    }).then(function(){
+      res.redirect(`/pessoal/${tipo_usuario}/${id_usuario}/`)
+    })
+  }
+})
+
+app.post('/att_publicacao/:id', function (req,res){
+  var dt=new Date()
+  var ano_atual= dt.getFullYear()
+  var erros_publicacao=[]
+
+  if(req.body.titulo_pub==null || req.body.titulo_pub==" " || req.body.titulo_pub==""){
+    erros_publicacao.push({texto:'Insira o título do artigo.'})
+  }
+
+  if(req.body.local_pub==null || req.body.local_pub==" " || req.body.local_pub==""){
+    erros_publicacao.push({texto:'Insira o local de publicação.'})
+  }
+
+  if(req.body.ano_pub>ano_atual || req.body.ano_pub<(ano_atual-100)){
+    erros_publicacao.push({texto:'Informe o ano de publicação correto.'})
+  }
+
+  if(req.body.resumo_pub==null || req.body.resumo_pub==" " || req.body.resumo_pub==""){
+    erros_publicacao.push({texto:'Preencha um breve resumo de sua publicação.'})
+  }
+  if(erros_publicacao.length>0){
+    Publicacao.findOne({where:{id:req.params.id}}).then(function(publicacao){
+      res.render('edita_publicacao',{publicacao,erros_publicacao,tipo_usuario,id_usuario})
+    })
+  }else{
+    Publicacao.update({
+      titulo_publicacao: req.body.titulo_pub,
+      local_publicacao: req.body.local_pub,
+      ano_publicacao:req.body.ano_pub,
+      url_publicacao:req.body.url_pub,
+      tags_publicacao:req.body.tags_pub,
+      resumo_publicacao:req.body.resumo_pub
+    }, {
+      where: {
+        id_pesquisador: {
+          [Op.eq]:id_usuario
         }
       }
     }).then(function(){
@@ -453,7 +567,7 @@ app.get('/curtir/:id',function (req,res){
 app.post('/pessoal/:tipo/:id/busca_membro',async (req,res) => {
   Cidadao.findAll().then(function(lista_cidadaos){
     Pesquisador.findAll().then(function(lista_pesquisadores){
-      Postagem.findAll({order:[['id','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
+      Postagem.findAll({order:[['curtidas','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
         Cidadao.findAll({where:{nome:{[Op.like]:`%${req.body.nome_pesquisado}%`}}}).then(function(cidadaos){
           Pesquisador.findAll({where:{nome:{[Op.like]:`%${req.body.nome_pesquisado}%`}}}).then(function(pesquisadores){
             if(req.params.tipo=='pesquisador'){

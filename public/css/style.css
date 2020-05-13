@@ -426,6 +426,10 @@ section article h1{
   
 }
 
+#formulario_postar input{
+    display: block;
+}
+
 #font1{
 	font-size: 13px;
 	position: relative;
