@@ -446,18 +446,6 @@ app.post('/att_publicacao/:id', function (req,res){
 })
 
 
-/*
- Postagem.increment('curtidas',{where:{id:req.params.id}}).then(function(){
-    Postagem.findOne({where:{id:req.params.id}}).then(function(postagem){
-      console.log(postagem)
-      res.redirect(`/visita/${postagem.tipo_membro}/${postagem.id_membro}`)
-    })
-    
-  })
-
-
-*/
-
 app.get('/curtir/:id',function (req,res){
   if(tipo_usuario=='cidadao'){
     Curtida.findOne({where:{[Op.and]:[{Postagemid:req.params.id},{cidadaoId:id_usuario}]}}).then(function(curtida){

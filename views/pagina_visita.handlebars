@@ -75,7 +75,9 @@
                         <hr>
                         <p>{{dataValues.resumo_publicacao}}</p>
                         <i>Local de publicação: {{dataValues.local_publicacao}}</i><br>
-                        <i>Ano: {{dataValues.ano_publicacao}}</i>
+                        <i>Ano: {{dataValues.ano_publicacao}}</i><br>
+                        <a href="https://{{dataValues.url_publicacao}}/" target="_blank">URL da publicação</a><br>
+                        Tags: {{dataValues.tags_publicacao}}
                         <hr>
                         Curtidas: {{dataValues.curtidas}} <a href="/curtir_pub/{{dataValues.id}}">Curtir</a>
                   </div>
