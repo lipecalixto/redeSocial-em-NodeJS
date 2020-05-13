@@ -18,6 +18,7 @@ const Pesquisador=require("./models/Pesquisador")
 const Postagem=require("./models/Postagem")
 const Publicacao=require("./models/Publicacao")
 const Curtida=require("./models/Curtida")
+const Curtida_pub=require("./models/Curtida_pub")
 const banco=require('./models/Banco')
 const path=require("path")
 const Op =banco.Sequelize.Op;
@@ -133,55 +134,6 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
     }     
   }
 })
-
-
-/*
-app.get('/feed/:tipo/:id/visita/:tipo_visita/:id_visita/', function(req,res){
-  var tipo=''
-  if(req.params.tipo=='pesquisador'){
-    Pesquisador.findOne({where:{'id':req.params.id_membro}}).then(function(dados_perfil){
-      var tipo='pesquisador'
-      if(req.params.tipo_visita=='pesquisador'){
-        Pesquisador.findOne({where:{id:req.params.id_visita}}).then(function(dados_visita){
-          res.render(dados_perfil,dados_visita,tipo)
-        })
-      }else if(req.params.tipo_visita=='cidadao'){
-        Cidadao.findOne({where:{id:req.params.id_visita}}).then(function(dados_visita){
-          res.render(dados_perfil,dados_visita,tipo)
-        })
-      }
-    })
-  }else if(req.params.tipo=='cidadao'){
-    Cidadao.findOne({where:{'id':req.params.id_membro}}).then(function(dados_perfil){
-      var  tipo='cidadao'
-      if(req.params.tipo_visita=='pesquisador'){
-        Pesquisador.findOne({where:{id:req.params.id_visita}}).then(function(dados_visita){
-          res.render(dados_perfil,dados_visita,tipo)
-        })
-      }else if(req.params.tipo_visita=='cidadao'){
-        Cidadao.findOne({where:{id:req.params.id_visita}}).then(function(dados_visita){
-          res.render(dados_perfil,dados_visita,tipo)
-        })
-      }
-    })
-    
-  }
-  
-})   */
-
-/*
-app.get('/feed/:tipo/:id/:tipo_pag/:id_membro', function(req,res){
-  if(req.params.tipo_pag=='pesquisador'){
-    Pesquisador.findOne({where:{'id':req.params.id_membro}}).then(function(dados_perfil){
-      res.render('pagina_visita',({dados_perfil}))
-    })
-  }else{
-    Cidadao.findOne({where:{'id':req.params.id_membro}}).then(function(dados_perfil){
-      res.renderdes('pagina_visita',({dados_perfil}))
-    })
-    }})    */
-  
-  
 
 
 app.get('/atualiza_cid/:id',async function(req,res){
@@ -561,6 +513,63 @@ app.get('/curtir/:id',function (req,res){
     })
   }
 
+
+})
+
+app.get('/curtir_pub/:id',function (req,res){
+  if(tipo_usuario=='cidadao'){
+    Curtida_pub.findOne({where:{[Op.and]:[{publicacao_id:req.params.id},{cidadaoId:id_usuario}]}}).then(function(curtida){
+      if(curtida==null){
+        Curtida_pub.create({
+          publicacao_id: req.params.id,
+          cidadaoId: id_usuario,
+          tipoMembro: tipo_usuario
+        }).then(function(){
+          Publicacao.increment('curtidas',{where:{id:req.params.id}}).then(function(){
+            Publicacao.findOne({where:{id:req.params.id}}).then(function(publicacao){
+              res.redirect(`/visita/pesquisador/${publicacao.id_pesquisador}`)
+            })
+            
+          })
+        })
+      }else{
+        Curtida_pub.destroy({where:{[Op.and]:[{publicacao_id:req.params.id},{cidadaoId:id_usuario}]}}).then(function(){
+          Publicacao.decrement('curtidas',{where:{id:req.params.id}}).then(function(){
+            Publicacao.findOne({where:{id:req.params.id}}).then(function(publicacao){
+              res.redirect(`/visita/pesquisador/${publicacao.id_pesquisador}`)
+            })
+            
+          })
+        })
+      }
+    })
+  }else if(tipo_usuario=='pesquisador'){
+    Curtida_pub.findOne({where:{[Op.and]:[{publicacao_id:req.params.id},{pesquisadorId:id_usuario}]}}).then(function(curtida){
+      if(curtida==null){
+        Curtida_pub.create({
+          publicacao_id: req.params.id,
+          pesquisadorId: id_usuario,
+          tipoMembro: tipo_usuario
+      }).then(function(){
+        Publicacao.increment('curtidas',{where:{id:req.params.id}}).then(function(){
+          Publicacao.findOne({where:{id:req.params.id}}).then(function(publicacao){
+            res.redirect(`/visita/pesquisador/${publicacao.id_pesquisador}`)
+          })
+          
+        })
+      })
+      }else{
+        Curtida_pub.destroy({where:{[Op.and]:[{publicacao_id:req.params.id},{pesquisadorId:id_usuario}]}}).then(function(){
+          Publicacao.decrement('curtidas',{where:{id:req.params.id}}).then(function(){
+            Publicacao.findOne({where:{id:req.params.id}}).then(function(publicacao){
+              res.redirect(`/visita/pesquisador/${publicacao.id_pesquisador}`)
+            })
+            
+          })
+        })
+      }
+    })
+  }
 
 })
 
