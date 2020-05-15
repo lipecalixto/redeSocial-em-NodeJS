@@ -49,9 +49,13 @@
                  
             {{#each lista_pesquisadores}}
                   <li><a href="/visita/pesquisador/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+            {{else}}
+                  <li> <a class="list-group-item list-group-item-action list-group-item-secondary">Seguido por nenhum pesquisador</a></li>
             {{/each}}
             {{#each lista_cidadaos}}
                   <li><a href="/visita/cidadao/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+            {{else}}
+                  <li> <a class="list-group-item list-group-item-action list-group-item-secondary">Seguido por nenhum cidadão</a></li>
             {{/each}}
             </ul>
       </div>
@@ -69,6 +73,7 @@
                   Curtidas: {{dataValues.curtidas}} <a href="/curtir/{{dataValues.id}}">Curtir</a>
             </div>
       {{else}}
+      <p>{{dados_perfil.dataValues.nome}} não possui nenhuma postagem até o momento.</p>
       {{/each}}    
 
       {{#if eh_pesquisador}}
@@ -88,6 +93,7 @@
                         Curtidas: {{dataValues.curtidas}} <a href="/curtir_pub/{{dataValues.id}}">Curtir</a>
                   </div>
             {{else}}
+            <p>{{dados_perfil.dataValues.nome}} não possui nenhuma publicação até o momento.</p>
             {{/each}}
       {{else}}
       {{/if}}

@@ -123,6 +123,7 @@
             Curtidas:{{dataValues.curtidas}}
       </div>
       {{else}}
+      <p>Nenhuma postagem para exibir, compartilhe idéias e interaja com seus amigos.</p>
       {{/each}}
 
 
@@ -146,6 +147,7 @@
             Curtidas:{{dataValues.curtidas}}
       </div>
             {{else}}
+                  <p>Nenhuma publicação para exibir, compartilhe conhecimento e cadastre agora mesmo uma publicação .</p>
             {{/each}}
       {{else}}
       {{/if}}
@@ -159,9 +161,14 @@
              <ul><span id="seguidores"> Seguindo: </span>
              {{#each lista_pesquisadores}}
                    <li><a href="/visita/pesquisador/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+             {{else}}
+                  <li> <a class="list-group-item list-group-item-action list-group-item-light">Seguindo nenhum pesquisador</a></li>
              {{/each}}
              {{#each lista_cidadaos}}
                    <li><a href="/visita/cidadao/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+             
+             {{else}}
+                  <li> <a class="list-group-item list-group-item-action list-group-item-light">Seguindo nenhum cidadão</a></li>
              {{/each}}
              </ul>
       </div>

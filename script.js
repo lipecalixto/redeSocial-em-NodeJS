@@ -151,30 +151,80 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
     if(req.params.tipo=='cidadao'){
       Cidadao.findOne({where:{'id':req.params.id}}).then(function(dados_perfil){
         var eh_pesquisador=false
-        Postagem.findAll({order:[['curtidas','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
-          Pesquisador.findAll().then(function(lista_pesquisadores){
-            Cidadao.findAll({where:{id:{[Op.not]:req.params.id}}}).then(function(lista_cidadaos){
-              res.render('pagina_visita',{lista_cidadaos:lista_cidadaos,lista_pesquisadores:lista_pesquisadores,
-                dados_perfil:dados_perfil,eh_pesquisador:eh_pesquisador,id_usuario,tipo_usuario,postagens})
+        Seguir.findAll({where:{[Op.and]:[{seguido_id:req.params.id},{seguido_tipo:req.params.tipo},{segue_tipo:'cidadao'}]}}).then(function(seguidores_cidadaos){
+          Seguir.findAll({where:{[Op.and]:[{seguido_id:req.params.id},{seguido_tipo:req.params.tipo},{segue_tipo:'pesquisador'}]}}).then(function(seguidores_pesquisadores){
+            var array_cid=[]
+            seguidores_cidadaos.forEach(function(c){
+              array_cid.push(c.dataValues.segue_id)
             })
+
+            var array_pesq=[]
+            seguidores_pesquisadores.forEach(function(p){
+              array_pesq.push(p.dataValues.segue_id)
+            })
+            Postagem.findAll({order:[['curtidas','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
+              Pesquisador.findAll({where:{id:{[Op.or]:array_pesq}}}).then(function(lista_pesquisadores){
+                if(array_pesq.length<lista_pesquisadores.length){
+                  lista_pesquisadores=null
+                }
+
+                Cidadao.findAll({where:{id:{[Op.or]:array_cid}}}).then(function(lista_cidadaos){
+                  if(array_cid.length<lista_cidadaos.length){
+                    lista_cidadaos=null
+                  }
+
+
+                  res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,
+                    dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens})
+                })
+              })
+            })            
           })
-        })  
+        }) 
     })
 
 
     }else if(req.params.tipo=='pesquisador'){
       Pesquisador.findOne({where:{'id':req.params.id}}).then(function(dados_perfil){
         var eh_pesquisador=true
-        Postagem.findAll({order:[['curtidas','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
-          Pesquisador.findAll().then(function(lista_pesquisadores){
-            Cidadao.findAll({where:{id:{[Op.not]:req.params.id}}}).then(function(lista_cidadaos){
-              Publicacao.findAll({order:[['curtidas','DESC']],where:{id_pesquisador:req.params.id}}).then(function(publicacoes){
-                res.render('pagina_visita',{lista_cidadaos:lista_cidadaos,lista_pesquisadores:lista_pesquisadores,
-                  dados_perfil:dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,publicacoes})
-              })
+        Seguir.findAll({where:{[Op.and]:[{seguido_id:req.params.id},{seguido_tipo:req.params.tipo},{segue_tipo:'cidadao'}]}}).then(function(seguidores_cidadaos){
+          Seguir.findAll({where:{[Op.and]:[{seguido_id:req.params.id},{seguido_tipo:req.params.tipo},{segue_tipo:'pesquisador'}]}}).then(function(seguidores_pesquisadores){
+            var array_cid=[]
+            seguidores_cidadaos.forEach(function(c){
+              array_cid.push(c.dataValues.segue_id)
             })
-          })
-        })  
+
+            var array_pesq=[]
+            seguidores_pesquisadores.forEach(function(p){
+              array_pesq.push(p.dataValues.segue_id)
+            })
+
+            Postagem.findAll({order:[['curtidas','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
+              Pesquisador.findAll({where:{id:{[Op.or]:array_pesq}}}).then(function(lista_pesquisadores){
+                if(array_pesq.length<lista_pesquisadores.length){
+                  lista_pesquisadores=null
+                }
+  
+                Cidadao.findAll({where:{id:{[Op.or]:array_cid}}}).then(function(lista_cidadaos){
+                  if(array_cid.length<lista_cidadaos.length){
+                    lista_cidadaos=null
+                  }
+  
+                  Publicacao.findAll({order:[['curtidas','DESC']],where:{id_pesquisador:req.params.id}}).then(function(publicacoes){
+                    res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,
+                      dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,publicacoes})
+                  })
+                })
+              })
+            })  
+
+          })  
+
+
+
+        })
+
+        
     })
   
     }     
@@ -195,8 +245,10 @@ app.get('/visita/:tipo/:id/seguir', async function(req,res){
         res.redirect(`/visita/${req.params.tipo}/${req.params.id}/`)
       })
     }else{
-      
-      res.redirect(`/visita/${req.params.tipo}/${req.params.id}/`)
+      Seguir.destroy({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_id:req.params.id},{seguido_tipo:req.params.tipo}]}}).then(function(){
+        res.redirect(`/visita/${req.params.tipo}/${req.params.id}/`)     
+      })
+  
     }
   })
 })

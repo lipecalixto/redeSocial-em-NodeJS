@@ -272,6 +272,12 @@ section article h1{
     position: relative;
   
 }
+
+#erro_login{
+    width:400px;
+    float:right;
+    margin-right: 60px;
+}
 #btn_cadas:hover{
     background-color: blue;
     color:white;
