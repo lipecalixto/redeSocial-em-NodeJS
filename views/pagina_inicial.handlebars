@@ -156,13 +156,12 @@
 
 <aside id="iside2_pagini">
       <div class="list-group">
-             <ul><span id="seguidores"> Seguidores: </span>
-                   
+             <ul><span id="seguidores"> Seguindo: </span>
              {{#each lista_pesquisadores}}
-                   <li><a href="/visita/pesquisador/{{dataValues.id}}" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+                   <li><a href="/visita/pesquisador/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
              {{/each}}
              {{#each lista_cidadaos}}
-                   <li><a href="/visita/cidadao/{{dataValues.id}}" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+                   <li><a href="/visita/cidadao/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
              {{/each}}
              </ul>
       </div>
