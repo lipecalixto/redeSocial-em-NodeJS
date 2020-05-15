@@ -111,7 +111,7 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
     }else if(req.params.tipo=='pesquisador'){
       Pesquisador.findOne({where:{'id':req.params.id}}).then(function(dados_perfil){
         var eh_pesquisador=true
-        Postagem.findAll({order:[['id','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
+        Postagem.findAll({order:[['curtidas','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
           Seguir.findAll({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_tipo:'pesquisador'}]}}).then(function(seguindo_pesquisadores){
             Seguir.findAll({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_tipo:'cidadao'}]}}).then(function(seguindo_cidadaos){
               var array_cid=[]
