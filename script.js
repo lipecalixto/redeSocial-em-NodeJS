@@ -97,7 +97,14 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                     lista_cidadaos=null
                   }
                 
-                    res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,eh_pesquisador,postagens})
+                  Pesquisador.findAll({where:{[Op.and]:[{topicos_interesse:dados_perfil.temas_interesse},{id:{[Op.not]:array_pesq}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_pesquisadores){
+                    Cidadao.findAll({where:{[Op.and]:[{temas_interesse:dados_perfil.temas_interesse},{id:{[Op.not]:array_cid}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_cidadaos){
+                      
+                      res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,
+                        eh_pesquisador,postagens,sugestoes_cidadaos,sugestoes_pesquisadores})
+                    })
+                  })
+
             
                 })
               })       
@@ -119,7 +126,7 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
               seguindo_cidadaos.forEach(function(c){
                 array_cid.push(c.dataValues.seguido_id)
               })
-
+              
               var array_pesq=[]
               seguindo_pesquisadores.forEach(function(p){
                 array_pesq.push(p.dataValues.seguido_id)
@@ -133,9 +140,18 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                   if(array_cid.length<lista_cidadaos.length){
                     lista_cidadaos=null
                   }
-                 
+
                   Publicacao.findAll({order:[['curtidas','DESC']],where:{id_pesquisador:req.params.id}}).then(function(publicacoes){
-                    res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,eh_pesquisador,postagens,publicacoes})
+                      Pesquisador.findAll({where:{[Op.and]:[{topicos_interesse:dados_perfil.topicos_interesse},{id:{[Op.not]:array_pesq}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_pesquisadores){
+                        Cidadao.findAll({where:{[Op.and]:[{temas_interesse:dados_perfil.topicos_interesse},{id:{[Op.not]:array_cid}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_cidadaos){
+                         
+                          res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,eh_pesquisador,
+                            postagens,publicacoes,sugestoes_pesquisadores,sugestoes_cidadaos}) 
+                        })      
+                      }) 
+
+                    
+
                     
                   })
                 })
