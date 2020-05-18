@@ -75,7 +75,7 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
     if(req.params.tipo=='cidadao'){
       Cidadao.findOne({where:{'id':req.params.id}}).then(function(dados_perfil){
         var eh_pesquisador=false
-        Postagem.findAll({order:[['id','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
+        Postagem.findAll({order:[['curtidas','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
           Seguir.findAll({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_tipo:'pesquisador'}]}}).then(function(seguindo_pesquisadores){
             Seguir.findAll({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_tipo:'cidadao'}]}}).then(function(seguindo_cidadaos){
               var array_cid=[]
@@ -96,6 +96,7 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                   if(array_cid.length<lista_cidadaos.length){
                     lista_cidadaos=null
                   }
+                
                     res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,eh_pesquisador,postagens})
             
                 })
@@ -132,6 +133,7 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                   if(array_cid.length<lista_cidadaos.length){
                     lista_cidadaos=null
                   }
+                 
                   Publicacao.findAll({order:[['curtidas','DESC']],where:{id_pesquisador:req.params.id}}).then(function(publicacoes){
                     res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,eh_pesquisador,postagens,publicacoes})
                     
@@ -172,9 +174,9 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                   if(array_cid.length<lista_cidadaos.length){
                     lista_cidadaos=null
                   }
+                  var total_seguidores=array_pesq.length+array_cid.length
 
-
-                  res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,
+                  res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,total_seguidores,
                     dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens})
                 })
               })
@@ -211,7 +213,8 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                   }
   
                   Publicacao.findAll({order:[['curtidas','DESC']],where:{id_pesquisador:req.params.id}}).then(function(publicacoes){
-                    res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,
+                    var total_seguidores=array_pesq.length+array_cid.length
+                    res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,total_seguidores,
                       dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,publicacoes})
                   })
                 })
