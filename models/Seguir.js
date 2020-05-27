@@ -16,7 +16,6 @@ const Seguir=bd.sequelize.define('seguindo',{
 })
 
 
-
 //Seguir.sync({force:true})   
 
 
