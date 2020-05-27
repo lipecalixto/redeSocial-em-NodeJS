@@ -1,27 +1,38 @@
 <header>
-       <img src="./imagens/logo.png" alt="">
-                <div class="clear"></div>
-    </header>
+    <a href="/" id="btn_voltar" >Voltar a página inicial</a>
+    <img src="./imagens/logo.png" alt="">
+    <div class="clear"></div>
+</header>
+    
+        {{#if novaConta}}
+        
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Cadastro realizado com sucesso!</h4>
+                <p>Parabéns {{novo_cidadao.dataValues.nome}} agora você faz parte da EderOne.</p>
+                <p class="mb-0">Siga para a <a href="/">página inicial</a> da rede social e efetue o login.</p>
+            </div>
+        {{else}}
+        {{/if}}
 <section>
         <article id="cpCadastro">
         <h1>Formulário de Cadastro - Cidadão em geral</h1><hr>
         {{#each erros_cid}}
-                <div class="alerta_erro">{{texto}}</div>
+                <div class="alert alert-danger">{{texto}}</div>
             {{else}}
 
             {{/each}}
-            <div id="cadastropt1">
+            <div id="cadastropt1" class="sep_cas">
                 <form action="/add_cid" method="POST" name="cad1_cidadao" >
                     <fieldset>
-                        <legend><strong>Documento pessoal</strong></legend>
+                        <legend id="font_data">Documento pessoal</legend>
                         <select name="tipodoc" id="">
                             <option value="RG">RG</option>
                             <option value="CPF">CPF</option>
                         </select>
-                        <input type="text" name="numdoc">
+                        <input type="text" name="numdoc" placeholder="  número do documento">
                     </fieldset>
                    <fieldset>
-                        <legend><strong>Grau de escolaridade</strong></legend>
+                        <legend id="font_data">Grau de escolaridade</legend>
                         <select name="escolaridade" id="">
                             <option value="Fundamental - Incompleto">Fundamental - Incompleto</option>
                             <option value="Fundamental - Completo">Fundamental - Completo</option>
@@ -36,10 +47,12 @@
                             <option value="Pós-graduação (Stricto sensu, nível doutor) - Incompleto">Pós-graduação (Stricto sensu, nível doutor) - Incompleto</option>
                             <option value="Pós-graduação (Stricto sensu, nível doutor) - Completo">Pós-graduação (Stricto sensu, nível doutor) - Completo</option>
                         </select>
-                    </fieldset> 
-                     Tópicos de interesse: <input type="text" name="cid_topicos" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$">
+                    </fieldset> <br>
+                     <legend id="font_data">Tópicos de interesse:</legend> <input type="text" name="cid_topicos" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$">
                    
-                    <button type="submit" >Verificar</button>
+                    <div class="centraliza">
+                        <button type="submit" id="btn_cad1">Verificar</button>
+                    </div>
                 </form>
             </div>
         </article>

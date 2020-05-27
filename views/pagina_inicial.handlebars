@@ -1,28 +1,198 @@
 <header>
+      
+      <nav id="nav_topo">
+            <a href="/" class="btn btn-primary">  Sair  </a>
+            {{#if eh_pesquisador}}
+             <a href="/atualiza_pesq/{{dados_perfil.dataValues.id}}"><button class="btn btn-primary">alterar dados pesquisador</button> </a>
+             {{else}}
+             <a href="/atualiza_cid/{{dados_perfil.dataValues.id}}"><button class="btn btn-primary">alterar dados cidadão</button></a>
+             {{/if}}
+            <form action="./busca_membro" class="form-inline" id="busca_membro" method="POST" >
+                  <input class="form-control mr-sm-2" type="search" name="nome_pesquisado" placeholder="nome do membro" aria-label="Search">
+                  <button class="btn btn-info" type="submit">Buscar</button>
+                  
+                  {{#if encontrou_membro}}
+                        <div class="list-group">
+                  {{#each pesquisadores}}
+                        <a href="/visita/pesquisador/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a>
+                  {{/each}}
+      
+                  {{#each cidadaos}}
+                        <a href="/visita/cidadao/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a>
+                  {{/each}}
+                  {{else}}
+            </form>
+      </div>
+      {{/if}}
 
-    </header>
-<section>
-       {{#if eh_pesquisador}}
-       <a href="/atualiza_pesq"> alterar dados pesquisador </a>
-       {{else}}
-       <a href="/atualiza_cid"> alterar dados cidadão</a>
-       {{/if}}
-       <br>
-       <a href="/"> --  Logout --  </a>
-       
-       <h1> PAGINA INICIAL </h1>
-       <div>
-            <h2>{{dados_perfil.dataValues.nome}} </h2>
-            
-       </div>
-       
-       <ul>Amigos:
+      </nav>
+
+</header>
+
+<aside id="iside1_pagini">
+            <div>
+                  <div id='foto'> foto </div>
+                  <h2>{{dados_perfil.dataValues.nome}} </h2>
+                 
+                  <hr>
+                  {{#if eh_pesquisador}}
+                        <p>Nível de formação: {{dados_perfil.dataValues.nivel_formacao}}</p>
+                        <p>Instituição de Formação: {{dados_perfil.dataValues.instituicao_formacao}}</p>
+                        <p>Local de trabalho: {{dados_perfil.dataValues.cidade}} | {{dados_perfil.dataValues.uf}}</p>
+                        <p>Instituição de Pesquisa: {{dados_perfil.dataValues.instituicao_pesquisa}}</p>
+                        <hr>
+                        <p>E-mail: {{dados_perfil.dataValues.email}}</p>
+                        <p>Nascimento:{{dados_perfil.dataValues.datanasc}}</p>
+                        <p>Início com ciência de dados: {{dados_perfil.dataValues.data_inicio_cd}}</p>
+                        <a href="https://{{dados_perfil.dataValues.link_cv}}/" target="_blank">Currículo Lattes</a>
+                  {{else}}
+                        <p>Escolaridade: {{dados_perfil.dataValues.escolaridade}}</p>
+                        <p>E-mail: {{dados_perfil.dataValues.email}}</p>
+                        <p>Nascimento: {{dados_perfil.dataValues.datanasc}}</p>
+
+
              
-       {{#each lista_pesquisadores}}
-             <li><a href="/feed/pesquisador/{{dataValues.id}}">{{dataValues.nome}}</a></li>
-       {{/each}}
-       {{#each lista_cidadaos}}
-             <li><a href="/feed/cidadao/{{dataValues.id}}">{{dataValues.nome}}</a></li>
-       {{/each}}
-       </ul>
+                  {{/if}}
+               
+                  
+            </div>
+
+             
+            
+</aside>
+
+<div div="corpo_meio">
+<section id="section_ini">
+       
+      {{#each erros_postagem}}
+            <div class="alert alert-danger" role="alert">{{texto}}</div>
+      {{else}}
+
+      {{/each}}
+
+      
+    
+      <div id="formulario_postar">
+            <form action="./add_postagem" method="POST">
+                  <div class="form-group">
+                  <label for="exampleFormControlTextarea1" class="font-weight-bold">Postagem:</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="texto_postagem" placeholder="Comunique-se com os demais membros da rede ...">{{postagem_editar.dataValues.conteudo}}</textarea>
+                  </div> 
+                  <button type="submit" class="btn btn-light">Publicar</button>        
+            </form>
+      </div>   
+
+      {{#if eh_pesquisador}}
+            {{#each erros_publicacao}}
+                  <div class="alert alert-danger" role="alert">{{texto}}</div>
+            {{else}}
+            {{/each}}
+            <div id="formulario_postar">
+            <form action="./add_publicacao" method="POST">
+                  <div class="form-group">
+                  <label for="exampleFormControlTextarea1" class="font-weight-bold">Publicação:</label><br>
+                  Título:<input type="text" name="titulo_pub">
+                  Local de publicação:<input type="text" name="local_pub">
+                  Ano de publicação:<input type="number" name="ano_pub">
+                  URL:<input type="text" name="url_pub">
+                  Tags:<input type="text" name="tags_pub">
+                  Resumo:<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="resumo_pub" placeholder="Breve resumo sobre o artigo..."></textarea>
+                  <input type="file" name="arquivo_pub" id="">
+                  </div> 
+                  <button type="submit" class="btn btn-light">Publicar</button>        
+            </form>
+      </div>
+      {{else}}
+      {{/if}}
+
+       
+       
+       
+     
+     
+     <h1>Postagens</h1>
+      {{#each postagens}}
+      <div id="quadro_postagens"> 
+            <a href="/deletar_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
+            <a href="/atualiza_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
+            <small>{{dataValues.createdAt}}</small>
+            
+            <div class="clear"></div>
+          <hr> <p>{{dataValues.conteudo}}</p>
+
+            <hr>
+            Curtidas:{{dataValues.curtidas}}
+      </div>
+      {{else}}
+      <p>Nenhuma postagem para exibir, compartilhe idéias e interaja com seus amigos.</p>
+      {{/each}}
+
+
+      {{#if eh_pesquisador}}
+      <h1>Publicações</h1>
+            {{#each publicacoes}}
+      <div id="quadro_postagens">
+            <a href="/deletar_publicacao/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
+            <a href="/atualiza_publicacao/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
+            <small>{{dataValues.createdAt}}</small>
+            <div class="clear"></div>
+            
+            <p><b>{{dataValues.titulo_publicacao}}</p></b>
+            <hr>
+            <p>{{dataValues.resumo_publicacao}}</p>
+            <i>Local de publicação: {{dataValues.local_publicacao}}</i><br>
+            <i>Ano: {{dataValues.ano_publicacao}}</i><br>
+            <a href="https://{{dataValues.url_publicacao}}/" target="_blank">URL da publicação</a><br>
+            Tags: {{dataValues.tags_publicacao}}
+            <hr>
+            Curtidas:{{dataValues.curtidas}}
+      </div>
+            {{else}}
+                  <p>Nenhuma publicação para exibir, compartilhe conhecimento e cadastre agora mesmo uma publicação .</p>
+            {{/each}}
+      {{else}}
+      {{/if}}
 </section>
+</div>
+
+
+
+<aside id="iside2_pagini">
+      <div class="list-group">
+             <ul><span id="seguidores"> Seguindo: </span>
+             {{#each lista_pesquisadores}}
+                   <li><a href="/visita/pesquisador/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+             {{else}}
+                  <li> <a class="list-group-item list-group-item-action list-group-item-light">Seguindo nenhum pesquisador</a></li>
+             {{/each}}
+             {{#each lista_cidadaos}}
+                   <li><a href="/visita/cidadao/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+             
+             {{else}}
+                  <li> <a class="list-group-item list-group-item-action list-group-item-light">Seguindo nenhum cidadão</a></li>
+             {{/each}}
+             </ul>
+      </div>
+
+      <div class="list-group">
+             <ul><span id="sugestoes"> Sugestões de amizade: </span>
+             {{#each sugestoes_pesquisadores}}
+                   <li><a href="/visita/pesquisador/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+             {{else}}
+                  <li> <a class="list-group-item list-group-item-action list-group-item-light">Nenhuma sugestão de amizade- pesquisador </a></li>
+             {{/each}}
+             
+             {{#each sugestoes_cidadaos}}
+                   <li><a href="/visita/cidadao/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+             
+             {{else}}
+                  <li> <a class="list-group-item list-group-item-action list-group-item-light">Nenhuma sugestão de amizade - cidadão</a></li>
+             {{/each}}
+
+            
+             </ul>
+      </div>      
+      
+</aside>
+
+

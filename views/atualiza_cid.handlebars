@@ -1,19 +1,29 @@
 
 <section>
-        <a href="feed/cidadao/{{cidadao.dataValues.id}}"> Voltar a página inicial</a>
+        <a href="/pessoal/cidadao/{{cidadao.dataValues.id}}"> Voltar a página inicial</a>
         <article id="cpCadastro">
     <h1>Atualização de dados - Cidadão</h1><hr>
-    {{#each erros_cid}}
-                <div class="alerta_erro">{{texto}}</div>
-            {{else}}
+        {{#each erros_cid}}
+            <div class="alert alert-danger">{{texto}}</div>
+        {{else}}
+        {{/each}}
+        
+        {{#if atualizou}}
+            <div class="alert alert-success" role="alert">Dados atualizados com sucesso!</div>
+        {{else}}
+        {{/if}}
+        
 
-            {{/each}}
-            {{msg}}
-                <div id="cadastropt1">
+
+                <div id="cadastropt1" class="sep_cas">
                     <form action="/att_cid/{{cidadao.dataValues.id}}" method="POST">
-                        Nome Completo:<input type="text" name="nome" value="{{cidadao.dataValues.nome}}"  pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" >
-                        Data de nascimento:{{cidadao.dataValues.datanasc}} <input type="date" name="data_nasc">
-                        E-mail: <input type="email" name="email" value="{{cidadao.dataValues.email}}" > 
+                        Nome Completo:<input type="text" name="nome" value="{{cidadao.dataValues.nome}}"  pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" > <br>
+
+                        Data de nascimento:
+                        <span id='mov1'> <input type="date" name="data_nasc"> </span> <span id='font1'> {{cidadao.dataValues.datanasc}} </span><br>
+                        
+                        E-mail: <span id='mov2'> <input type="email" name="email" value="{{cidadao.dataValues.email}}" > </span> <br>
+                        
                         <hr>
                         <fieldset>
                         <legend><strong>Documento pessoal</strong></legend>
@@ -43,8 +53,8 @@
                         </select>
                     </fieldset> 
                      Tópicos de interesse: <input type="text" name="cid_topicos" value="{{cidadao.dataValues.temas_interesse}}" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$">
-                        
-                        <button  type="submit" >Verificar</button><input type="password" name="senha_verificacao" placeholder="Senha de verificação">
+                    <br>
+                        <button  type="submit" >Verificar</button><input type="password" name="senha_verificacao" placeholder="Senha de verificação"> 
                     </form>
                 </div>
             </article>

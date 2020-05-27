@@ -1,20 +1,34 @@
 <header>
-       <img src="./imagens/logo.png" alt="">
-        <div class="clear"></div>
-    </header>
+    <a href="/" id="btn_voltar" >Voltar a página inicial</a>
+    <img src="./imagens/logo.png" alt="">
+    <div class="clear"></div>
+         
+</header>
+        {{#if novaConta}}
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Cadastro realizado com sucesso!</h4>
+                <p>Parabéns {{novo_pesquisador.dataValues.nome}} agora você faz parte da EderOne.</p>
+                <p class="mb-0">Siga para a <a href="/">página inicial</a> da rede social e efetue o login.</p>
+            </div>
+        {{else}}
+        {{/if}}
 <section>
         <article id="cpCadastro">
         <h1>Formulário de Cadastro - Pesquisador</h1><hr>
         {{#each erros_pes}}
-                <div class="alerta_erro">{{texto}}</div>
+                <div class="alert alert-danger" role="alert">{{texto}}</div>
             {{else}}
 
             {{/each}}
-            <div id="cadastropt1">
+            <div id="cadastropt1" class="sep_cas">
                 <form action="/add_pesq" method="POST" name="cad1_pesquisador">
-                    Data em que comecei a trabalhar com ciência de dados: <input type="date" name="data_inicio"  required>
+                    
+                    <span id="font_data"> Data em que comecei a trabalhar com ciência de dados: </span>
+                    <div id="pos_date"> <input type="date" name="data_inicio"  required>  </div>
+                    
+
                     <fieldset>
-                        <legend>Local de trabalho</legend>
+                        <legend id="font_data">Local de trabalho</legend>
                 
                        Estado: <select name="estado">
                             <option value="AC">AC</option>
@@ -45,11 +59,13 @@
                             <option value="SE">SE</option>
                             <option value="TO">TO</option>
                         </select><br>
-                        Cidade:<input type="text" name="cidade" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" required>
+                        
+                        <span id="pos_cidade"> Cidade:<input type="text" name="cidade" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" required> </span> 
+
                     </fieldset>
                     Instituição onde realiza sua pesquisa: <input type="text" name="instituicao" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$">
                     <fieldset>
-                        <legend> Formação </legend>
+                        <legend id="font_data"> Formação </legend>
                         
                         <select name="nivel_form" id="">
                             <option value="Superior - Incompleto">Superior - Incompleto</option>
@@ -61,11 +77,16 @@
                             <option value="Pós-graduação (Stricto sensu, nível doutor) - Incompleto">Pós-graduação (Stricto sensu, nível doutor) - Incompleto</option>
                             <option value="Pós-graduação (Stricto sensu, nível doutor) - Completo">Pós-graduação (Stricto sensu, nível doutor) - Completo</option>
                         </select>
-                    <br>
-                        Instituicão de formação:<input type="text" name="local_form" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{instituicao_formacao}}">
+                    <br><br>
+                        
+                        <div id="pos_ins"> Instituicão de formação:<input type="text" name="local_form" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{instituicao_formacao}}"> </div>
+
                     </fieldset>
-                    Currículos Latters: <input type="text" name="linkcv" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$">
-                    Tópicos de interesse: <input type="text" name="pes_topicos" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$">
+                    
+                    Currículos Lattes: <div id="pos_cur"> <input type="text" name="linkcv"> </div>
+                    
+                    Tópicos de interesse:<div id="pos_int">  <input type="text" name="pes_topicos" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$"> </div>
+                    
                     <button type="submit" >Verificar</button>
                 </form>
             </div>

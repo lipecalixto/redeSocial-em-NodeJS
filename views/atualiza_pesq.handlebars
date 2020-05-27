@@ -1,80 +1,102 @@
-
+<header>
+    <nav id="nav_topo">
+        <a href="/" class="btn btn-primary">  Sair  </a>
+    </nav>
+</header>
 <section>
-        <a href="feed/pesquisador/{{pesquisador.dataValues.id}}"> Voltar a página inicial</a>
+        <a href="/pessoal/pesquisador/{{pesquisador.dataValues.id}}" id="btn_voltarpag2"> Voltar a página inicial</a>
         <article id="cpCadastro">
-    <h1>Atualização de dados - Pesquisador</h1><hr>
-    {{#each erros_pes}}
-                <div class="alerta_erro">{{texto}}</div>
-            {{else}}
+        <h1>Atualização de dados - Pesquisador</h1><hr>
+        {{#each erros_pes}}
+            <div class="alert alert-danger">{{texto}}</div>
+        {{else}}
+        {{/each}}
 
-            {{/each}}
-            {{erro}}
-            {{msg_sucess}}
-                <div id="cadastropt1">
-                    <form action="/att_pesq" method="POST">
-                        Nome Completo:<input type="text" name="nome" value="{{pesquisador.dataValues.nome}}"  pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" >
-                        Data de nascimento:{{data_nasc}} <input type="date" name="data_nasc">
-                        E-mail: <input type="email" name="email" value="{{pesquisador.dataValues.email}}" > 
-                        <hr>
-                        Data em que comecei a trabalhar com ciência de dados:{{pesquisador.dataValues.data_inicio_cd}} <input type="date" name="data_inicio" >
-                        <fieldset>
-                            <legend>Local de trabalho</legend>
-                    
-                        Estado: <select name="estado">
-                                <option value="{{pesquisador.dataValues.uf}}">{{pesquisador.dataValues.uf}}</option>
-                                <option value="AC">AC</option>
-                                <option value="AL">AL</option>
-                                <option value="AP">AP</option>
-                                <option value="AM">AM</option>
-                                <option value="BA">BA</option>
-                                <option value="CE">CE</option>
-                                <option value="DF">DF</option>
-                                <option value="ES">ES</option>
-                                <option value="GO">GO</option>
-                                <option value="MA">MA</option>
-                                <option value="MT">MT</option>
-                                <option value="MS">MS</option>
-                                <option value="MG">MG</option>
-                                <option value="PA">PA</option>
-                                <option value="PB">PB</option>
-                                <option value="PR">PR</option>
-                                <option value="PE">PE</option>
-                                <option value="PI">PI</option>
-                                <option value="RJ">RJ</option>
-                                <option value="RN">RN</option>
-                                <option value="RS">RS</option>
-                                <option value="RO">RO</option>
-                                <option value="RR">RR</option>
-                                <option value="SC">SC</option>
-                                <option value="SP">SP</option>
-                                <option value="SE">SE</option>
-                                <option value="TO">TO</option>
-                            </select><br>
-                            Cidade:<input type="text" name="cidade" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{pesquisador.dataValues.cidade}}">
-                        </fieldset>
-                        Instituição onde realiza sua pesquisa: <input type="text" name="instituicao" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{pesquisador.dataValues.instituicao_pesquisa}}">
-                        <fieldset>
-                            <legend> Formação </legend>
+        {{#if atualizou}}
+            <div class="alert alert-success" role="alert">Dados atualizados com sucesso!</div>
+        {{else}}
+        {{/if}}
+                    <div id="cadastropt1" class="sep_cas" >
+                        <form action="/att_pesq/{{pesquisador.dataValues.id}}" method="POST">
+                            Nome Completo:<input type="text" name="nome" value="{{pesquisador.dataValues.nome}}"  pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" ><br><br>
+
+                            Data de nascimento:<span id='mov1'> <input type="date" name="data_nasc"></span> <span id='font1'> {{pesquisador.dataValues.datanasc}} 
+                            </span> <br>
+
+                            E-mail: <span id='mov2'>  <input type="email" name="email" value="{{pesquisador.dataValues.email}}" > </span>  
                             
-                            <select name="nivel_form" id="">
-                            <option value="{{pesquisador.dataValues.nivel_formacao}}">{{pesquisador.dataValues.nivel_formacao}}</option>
-                            <option value="Superior - Incompleto">Superior - Incompleto</option>
-                            <option value="Superior - Completo">Superior - Completo</option>
-                            <option value="Pós-graduação (Lato senso) - Incompleto">Pós-graduação (Lato senso) - Incompleto</option>
-                            <option value="Pós-graduação (Lato senso) - Completo">Pós-graduação (Lato senso) - Completo</option>
-                            <option value="Pós-graduação (Stricto sensu, nível mestrado) - Incompleto">Pós-graduação (Stricto sensu, nível mestrado) - Incompleto</option>
-                            <option value="Pós-graduação (Stricto sensu, nível mestrado) - Completo">Pós-graduação (Stricto sensu, nível mestrado) - Completo</option>
-                            <option value="Pós-graduação (Stricto sensu, nível doutor) - Incompleto">Pós-graduação (Stricto sensu, nível doutor) - Incompleto</option>
-                            <option value="Pós-graduação (Stricto sensu, nível doutor) - Completo">Pós-graduação (Stricto sensu, nível doutor) - Completo</option>
-                        </select>
-                        <br>
-                            Instituicão de formação:<input type="text" name="local_form" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{instituicao_formacao}}">
-                        </fieldset>
-                        Currículos Latters: <input type="text" name="linkcv" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{pesquisador.dataValues.link_cv}}">
-                        Tópicos de interesse: <input type="text" name="pes_topicos" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{pesquisador.dataValues.topicos_interesse}}">
+                            <hr>
+                            Data em que comecei a trabalhar com ciência de dados:<br>
+                            <span id='mov4'> <input type="date" name="data_inicio" > </span><span id='font1'>{{pesquisador.dataValues.data_inicio_cd}}</span> 
+
+                            <fieldset>
+                                <legend>Local de trabalho</legend>
                         
-                        <button type="submit" >Verificar</button><input type="password" name="senha_verificacao" placeholder="Senha de verificação">
-                    </form>
-                </div>
+                            Estado: <select name="estado">
+                                    <option value="{{pesquisador.dataValues.uf}}">{{pesquisador.dataValues.uf}}</option>
+                                    <option value="AC">AC</option>
+                                    <option value="AL">AL</option>
+                                    <option value="AP">AP</option>
+                                    <option value="AM">AM</option>
+                                    <option value="BA">BA</option>
+                                    <option value="CE">CE</option>
+                                    <option value="DF">DF</option>
+                                    <option value="ES">ES</option>
+                                    <option value="GO">GO</option>
+                                    <option value="MA">MA</option>
+                                    <option value="MT">MT</option>
+                                    <option value="MS">MS</option>
+                                    <option value="MG">MG</option>
+                                    <option value="PA">PA</option>
+                                    <option value="PB">PB</option>
+                                    <option value="PR">PR</option>
+                                    <option value="PE">PE</option>
+                                    <option value="PI">PI</option>
+                                    <option value="RJ">RJ</option>
+                                    <option value="RN">RN</option>
+                                    <option value="RS">RS</option>
+                                    <option value="RO">RO</option>
+                                    <option value="RR">RR</option>
+                                    <option value="SC">SC</option>
+                                    <option value="SP">SP</option>
+                                    <option value="SE">SE</option>
+                                    <option value="TO">TO</option>
+                                </select>
+
+                                <span id='mov5'> Cidade:<input type="text" name="cidade" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{pesquisador.dataValues.cidade}}"> </span>
+
+
+                            </fieldset>
+                            Instituição onde realiza sua pesquisa: <input type="text" name="instituicao" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{pesquisador.dataValues.instituicao_pesquisa}}">
+
+                            <fieldset>
+                                <legend> Formação </legend>
+                                
+                                <select name="nivel_form" id="">
+                                <option value="{{pesquisador.dataValues.nivel_formacao}}">{{pesquisador.dataValues.nivel_formacao}}</option>
+                                <option value="Superior - Incompleto">Superior - Incompleto</option>
+                                <option value="Superior - Completo">Superior - Completo</option>
+                                <option value="Pós-graduação (Lato senso) - Incompleto">Pós-graduação (Lato senso) - Incompleto</option>
+                                <option value="Pós-graduação (Lato senso) - Completo">Pós-graduação (Lato senso) - Completo</option>
+                                <option value="Pós-graduação (Stricto sensu, nível mestrado) - Incompleto">Pós-graduação (Stricto sensu, nível mestrado) - Incompleto</option>
+                                <option value="Pós-graduação (Stricto sensu, nível mestrado) - Completo">Pós-graduação (Stricto sensu, nível mestrado) - Completo</option>
+                                <option value="Pós-graduação (Stricto sensu, nível doutor) - Incompleto">Pós-graduação (Stricto sensu, nível doutor) - Incompleto</option>
+                                <option value="Pós-graduação (Stricto sensu, nível doutor) - Completo">Pós-graduação (Stricto sensu, nível doutor) - Completo</option>
+
+                            </select>
+                            <br> <br>
+
+                                Instituicão de formação: <span id="mov6"> <input type="text" name="local_form" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{pesquisador.dataValues.instituicao_formacao}}"> </span>
+
+                            </fieldset>
+
+                            Currículos Lattes: <input type="text" name="linkcv" value="{{pesquisador.dataValues.link_cv}}"> <br>
+
+                            Tópicos de interesse: <span id="mov7"> <input type="text" name="pes_topicos" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="{{pesquisador.dataValues.topicos_interesse}}"> </span>
+                            <br>
+                            
+                            <button type="submit" >Verificar</button><input type="password" name="senha_verificacao" placeholder="Senha de verificação">
+                        </form>
+                    </div>
             </article>
         </section>
