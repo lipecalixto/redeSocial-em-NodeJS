@@ -274,14 +274,14 @@ app.get('/visita/:tipo/:id/seguir', async function(req,res){
 
 app.get('/atualiza_cid/:id',async function(req,res){
   Cidadao.findOne({ where: { id:req.params.id } }).then(function(cidadao){
-    res.render('atualiza_cid',{cidadao:cidadao})
+    res.render('atualiza_cid',{cidadao,id_usuario,tipo_usuario})
   })
 
 })
 
 app.get('/atualiza_pesq/:id', async function(req,res){
   Pesquisador.findOne({ where: { id:req.params.id } }).then(function(pesquisador){
-    res.render('atualiza_pesq',{pesquisador:pesquisador})  
+    res.render('atualiza_pesq',{pesquisador,id_usuario,tipo_usuario})  
   })
   
 })
@@ -930,9 +930,7 @@ app.post('/att_cid/:id',async (req,res) =>{
   
   if(req.body.senha_verificacao!=cidadao.senha){
     erros_cid.push({texto:'Senha de verificação incorreta.'})
-    res.render('atualiza_cid',({erros_cid:erros_cid,
-      cidadao:cidadao
-    }))
+    res.render('atualiza_cid',({erros_cid,cidadao,id_usuario,tipo_usuario}))
   }else{
   if(req.body.nome!=cidadao.nome && req.body.nome.length<3){
     erros_cid.push({texto:'Nome muito pequeno. Digite um nome válido.'})
@@ -1015,7 +1013,9 @@ app.post('/att_cid/:id',async (req,res) =>{
     })
   }
 
-  if(req.body.cid_topicos!=cidadao.temas_interesse){
+  if(req.body.cid_topicos!=cidadao.temas_interesse && req.body.cid_topicos.length<3){
+    erros_cid.push({texto:'Informe um tópico correto.'})
+  }else{
     Cidadao.update({
       temas_interesse:req.body.cid_topicos
     }, {
@@ -1029,8 +1029,7 @@ app.post('/att_cid/:id',async (req,res) =>{
 
   if(erros_cid.length>0){
     Cidadao.findOne({ where: { id:req.params.id } }).then(function(cidadao1){
-      res.render('atualiza_cid',({erros_cid:erros_cid,
-        cidadao:cidadao1
+      res.render('atualiza_cid',({erros_cid,cidadao:cidadao1,id_usuario,tipo_usuario
       }))
     })
 
@@ -1038,7 +1037,7 @@ app.post('/att_cid/:id',async (req,res) =>{
     var cidadao2= await Cidadao.findOne({ where: { id:req.params.id } }).then(function(cidadao2){
       atualizou=true
       res.render('atualiza_cid',({atualizou,
-        cidadao:cidadao2
+        cidadao:cidadao2,id_usuario,tipo_usuario
       }))
     })
   }
@@ -1056,11 +1055,10 @@ app.post('/att_pesq/:id', async (req,res) =>{
 
   if(req.body.senha_verificacao!=pesquisador.senha){
     erros_pes.push({texto:'Senha de verificação incorreta.'})
-    res.render('atualiza_pesq',({erros_pes:erros_pes,pesquisador:pesquisador
+    res.render('atualiza_pesq',({erros_pes,pesquisador,id_usuario,tipo_usuario
     }))
 
-  }
-  else{
+  }else{
 
   if(req.body.nome!=pesquisador.nome && req.body.nome.length<3){
     erros_pes.push({texto:'Nome muito pequeno. Digite um nome válido.'})
@@ -1206,15 +1204,14 @@ app.post('/att_pesq/:id', async (req,res) =>{
 
   if(erros_pes.length>0 ){
     Pesquisador.findOne({where:{id:req.params.id}}).then(function(pesquisador1){
-      res.render('atualiza_pesq',({erros_pes:erros_pes,pesquisador:pesquisador1}))
-      console.log(pesquisador1)
+      res.render('atualiza_pesq',({erros_pes,pesquisador:pesquisador1,id_usuario,tipo_usuario}))
     })
   
   }else{
     Pesquisador.findOne({where:{id:req.params.id}}).then(function(pesquisador1){
       var atualizou=true
       res.render('atualiza_pesq',({atualizou,
-        pesquisador:pesquisador1
+        pesquisador:pesquisador1,id_usuario,tipo_usuario
       }))  
     })
   } 
