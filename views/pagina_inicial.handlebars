@@ -1,12 +1,8 @@
 <header>
       
       <nav id="nav_topo">
-            <a href="/" class="btn btn-primary">  Sair  </a>
-            {{#if eh_pesquisador}}
-             <a href="/atualiza_pesq/{{dados_perfil.dataValues.id}}"><button class="btn btn-primary">alterar dados pesquisador</button> </a>
-             {{else}}
-             <a href="/atualiza_cid/{{dados_perfil.dataValues.id}}"><button class="btn btn-primary">alterar dados cidadão</button></a>
-             {{/if}}
+            
+            
             <form action="./busca_membro" class="form-inline" id="busca_membro" method="POST" >
                   <input class="form-control mr-sm-2" type="search" name="nome_pesquisado" placeholder="nome do membro" aria-label="Search">
                   <button class="btn btn-info" type="submit">Buscar</button>
@@ -22,7 +18,23 @@
                   {{/each}}
                   {{else}}
             </form>
-      </div>
+
+           <div class="dropdown">
+                  <button class="dropbtn"> Menu </button>
+                  <div class="dropdown-content">
+                        
+
+                              {{#if eh_pesquisador}}
+                                    <a href="/atualiza_pesq/{{dados_perfil.dataValues.id}}">alterar dados</a>
+                              {{else}}
+                                    <a href="/atualiza_cid/{{dados_perfil.dataValues.id}}">alterar dados</a>
+                              {{/if}} 
+
+                        <a href="/">  Sair  </a>
+                        
+                  </div>
+            </div>
+
       {{/if}}
 
       </nav>
@@ -194,5 +206,5 @@
       </div>      
       
 </aside>
-
+    
 
