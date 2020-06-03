@@ -1221,16 +1221,16 @@ app.post('/att_pesq/:id', async (req,res) =>{
 
 
 
-app.listen(8081,function(){
+app.listen(3000,function(){
   console.log('Servidor rodando...')
 })
 
 /*
 
-const PORTA=process.env.PORT || 8089
 app.listen(8081,function(){
   console.log('Servidor rodando...')
 })
+
 */
 
 
