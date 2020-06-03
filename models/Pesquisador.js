@@ -39,7 +39,7 @@ const Pesquisador=bd.sequelize.define('pesquisadores',{
     }  
 })
 
-Pesquisador.sync({force:true})   
+//Pesquisador.sync({force:true})   
 
 
 module.exports=Pesquisador
