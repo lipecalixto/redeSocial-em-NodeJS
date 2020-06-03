@@ -31,7 +31,7 @@ const Cidadao=bd.sequelize.define('cidadaos',{
 
 
 
-//Cidadao.sync({force:true})   
+Cidadao.sync({force:true})   
 
 
 
