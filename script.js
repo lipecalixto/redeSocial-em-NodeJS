@@ -1221,17 +1221,25 @@ app.post('/att_pesq/:id', async (req,res) =>{
 
 
 
-app.listen(3000,function(){
-  console.log('Servidor rodando...')
-})
-
-/*
-
+//Servidor localhost
 app.listen(8081,function(){
   console.log('Servidor rodando...')
 })
 
+
+/*
+//Servidor localhost
+app.listen(8081,function(){
+  console.log('Servidor rodando...')
+})
+
+//Servidor online
+app.listen(3000,function(){
+  console.log('Servidor rodando...')
+})
+
 */
+
 
 
 
