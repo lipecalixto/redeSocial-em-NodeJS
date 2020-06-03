@@ -12,8 +12,8 @@ const sequelize=new Sequelize('sistemadecadastro','userrede','291623',{
 })
 */
 
-const sequelize=new Sequelize('sistemadecadastro','userrede','291623',{
-    host:"localhost",
+const sequelize=new Sequelize('sistemadecadastro','userrede','291623Leo',{
+    host:"mysql669.umbler.com",
     dialect:"mysql"
 })
 
