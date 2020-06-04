@@ -220,6 +220,11 @@ section article h1{
     left: -550px;
     top:40px;
 }
+#pos_cid_inte{
+    position: relative;
+    top:10px;
+    right: 60px;
+}
 
 /* cadastro pes*/
 #font_data{
