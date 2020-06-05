@@ -12,12 +12,12 @@ header img{
 
 
 header {
-    padding: 10px;
+    
     max-width: 100%;
     margin:0 auto;
     background-color:rgb(176,196,222);
     text-align: center;
-    
+    height: 70px;
 }
 
 header .login{
@@ -110,7 +110,8 @@ section article h1{
 
 #nav_topo{
     padding:5px;
-    height: 50px;
+    position: relative;
+    top:7px;
     
 }
 
@@ -587,3 +588,59 @@ section article h1{
     
 }
 
+/* pagina de visita */
+.dropbtnpg {
+    background-color: royalblue;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: solid 1px royalblue;
+    border-radius: 15px;
+    cursor: pointer;
+    position: relative;
+    left:631px;
+    top:0px;
+    
+  }
+  
+  
+.dropdownpg {
+    position: relative;
+    display: inline-block;
+    
+  }
+  
+
+.dropdown-contentpg {
+    display: none;
+    position: absolute;
+    left:630px;
+    top:40px;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+   
+  }
+  
+ 
+.dropdown-contentpg a {
+    color: black;
+    padding: 10px 5px;
+    text-decoration: none;
+    display: block;
+    
+  }
+  
+  
+.dropdown-contentpg a:hover {background-color: #f1f1f1}
+  
+ 
+.dropdownpg:hover .dropdown-contentpg {
+    display: block;
+  }
+  
+  
+.dropdownpg:hover .dropbtnpg {
+    background-color: blue;
+}
