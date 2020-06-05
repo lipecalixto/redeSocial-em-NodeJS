@@ -10,14 +10,13 @@ header img{
    
 }
 
-
 header {
-    
+    padding: 10px;
     max-width: 100%;
     margin:0 auto;
     background-color:rgb(176,196,222);
     text-align: center;
-    height: 70px;
+    
 }
 
 header .login{
