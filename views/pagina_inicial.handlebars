@@ -19,7 +19,12 @@
                   {{else}}
             </form>
 
-           <div class="dropdown">
+           
+
+      {{/if}}
+
+      </nav>
+      <div class="dropdown">
                   <button class="dropbtn"> Menu </button>
                   <div class="dropdown-content">
                         
@@ -33,12 +38,7 @@
                         <a href="/">  Sair  </a>
                         
                   </div>
-            </div>
-
-      {{/if}}
-
-      </nav>
-
+      </div>
 </header>
 
 <aside id="iside1_pagini">
@@ -122,7 +122,7 @@
        
      
      
-     <h1>Postagens</h1>
+     <h1>Postar Mesangem</h1>
       {{#each postagens}}
       <div id="quadro_postagens"> 
             <a href="/deletar_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
