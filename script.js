@@ -23,7 +23,7 @@ const Seguir=require("./models/Seguir")
 const banco=require('./models/Banco')
 const path=require("path")
 const Op =banco.Sequelize.Op;
-
+const moment = require('moment')
 
 
 
@@ -42,7 +42,23 @@ var dados_comuns={
 
 //app.use(express.static(__dirname))
 
-app.engine('handlebars',handlebars({defaultLayout:'main'}))
+
+
+
+app.engine('handlebars', handlebars({
+  defaultLayout: 'main',
+  helpers: {
+      formatDate: (date,time) => {
+          return moment(date,time).format('DD/MM/YYYY - HH:mm')
+      },
+      formataAno:(data)=>{
+        return moment(data).format('DD/MM/YYYY')
+      }
+  }
+}))
+
+
+
 app.set('view engine','handlebars')
 
 app.use(express.static(path.join(__dirname,"public")))
@@ -293,6 +309,7 @@ app.post('/cadastro_geral',async (req,res) =>{
     var dataNascimento=req.body.data_nasc
     dataNascimento=dataNascimento.split("-")
     var idade=verificaIdade(Number(dataNascimento[0]))
+    console.log(dataNascimento)
     
     
     var ehmembro1= await Cidadao.findOne({ where: { email:req.body.email } })
@@ -343,6 +360,7 @@ app.post('/cadastro_geral',async (req,res) =>{
         senha: req.body.senha,
         datanasc:req.body.data_nasc
       }
+      console.log(dados_comuns.datanasc)
      
         if(req.body.tipouser=='pesquisador'){
           res.redirect("/cad_pesq")
@@ -836,7 +854,7 @@ app.post('/add_cid', async (req,res) =>{
   }).then(function(novo_cidadao){
     var novaConta=true
     res.render('cadastro_cid',({novaConta,novo_cidadao}))
-     
+    console.log(novo_cidadao.datanasc)
   }).catch(function(erro){
       res.redirect("/")
   })
@@ -1221,10 +1239,12 @@ app.post('/att_pesq/:id', async (req,res) =>{
 
 
 
-//Servidor online
-app.listen(3000,function(){
+
+//Servidor localhost
+app.listen(8081,function(){
   console.log('Servidor rodando...')
 })
+
 
 
 /*

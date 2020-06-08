@@ -20,7 +20,7 @@
                         Nome Completo:<input type="text" name="nome" value="{{cidadao.dataValues.nome}}"  pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" > <br>
 
                         Data de nascimento:
-                        <span id='mov1'> <input type="date" name="data_nasc"> </span> <span id='font1'> {{cidadao.dataValues.datanasc}} </span><br>
+                        <span id='mov1'> <input type="date" name="data_nasc"> </span> <span id='font1'> {{#formataAno cidadao.dataValues.datanasc}}{{/formataAno}} </span><br>
                         
                         E-mail: <span id='mov2'> <input type="email" name="email" value="{{cidadao.dataValues.email}}" > </span> <br>
                         

@@ -71,7 +71,7 @@
       <h1>Postagens</h1>
       {{#each postagens}}
             <div id="quadro_postagens">
-                  <small>{{dataValues.createdAt}}</small>
+                  <small>postado em {{#formatDate dataValues.createdAt}}{{/formatDate}}</small>
                   <div class="clear"></div>
                   <hr> 
                   <p>{{dataValues.conteudo}}</p>
@@ -86,7 +86,7 @@
       <h1>Publicações</h1>
             {{#each publicacoes}}
                   <div id="quadro_postagens">
-                        <small>{{dataValues.createdAt}}</small>
+                        <small>publicado em {{#formatDate dataValues.createdAt}}{{/formatDate}}</small>
                         <div class="clear"></div>
                         <p><b>{{dataValues.titulo_publicacao}}</p></b>
                         <hr>

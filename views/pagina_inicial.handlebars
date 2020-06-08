@@ -54,13 +54,14 @@
                         <p>Instituição de Pesquisa: {{dados_perfil.dataValues.instituicao_pesquisa}}</p>
                         <hr>
                         <p>E-mail: {{dados_perfil.dataValues.email}}</p>
-                        <p>Nascimento:{{dados_perfil.dataValues.datanasc}}</p>
-                        <p>Início com ciência de dados: {{dados_perfil.dataValues.data_inicio_cd}}</p>
+                        <p>Nascimento: {{#formataAno dados_perfil.dataValues.datanasc}}{{/formataAno}}</p>
+                        {{olamundo}}
+                        <p>Início com ciência de dados: {{#formataAno dados_perfil.dataValues.data_inicio_cd}}{{/formataAno}}</p>
                         <a href="https://{{dados_perfil.dataValues.link_cv}}/" target="_blank">Currículo Lattes</a>
                   {{else}}
                         <p>Escolaridade: {{dados_perfil.dataValues.escolaridade}}</p>
                         <p>E-mail: {{dados_perfil.dataValues.email}}</p>
-                        <p>Nascimento: {{dados_perfil.dataValues.datanasc}}</p>
+                        <p>Nascimento: {{#formataAno dados_perfil.dataValues.datanasc}}{{/formataAno}}</p>
 
 
              
@@ -127,7 +128,7 @@
       <div id="quadro_postagens"> 
             <a href="/deletar_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
             <a href="/atualiza_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
-            <small>{{dataValues.createdAt}}</small>
+            <small>postado em {{#formatDate dataValues.createdAt}}{{/formatDate}}</small>
             
             <div class="clear"></div>
           <hr> <p>{{dataValues.conteudo}}</p>
@@ -146,7 +147,7 @@
       <div id="quadro_postagens">
             <a href="/deletar_publicacao/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
             <a href="/atualiza_publicacao/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
-            <small>{{dataValues.createdAt}}</small>
+            <small>publicado em {{#formatDate dataValues.createdAt}}{{/formatDate}}</small>
             <div class="clear"></div>
             
             <p><b>{{dataValues.titulo_publicacao}}</p></b>

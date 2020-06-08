@@ -20,14 +20,14 @@
                         <form action="/att_pesq/{{pesquisador.dataValues.id}}" method="POST">
                             Nome Completo:<input type="text" name="nome" value="{{pesquisador.dataValues.nome}}"  pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" ><br><br>
 
-                            Data de nascimento:<span id='mov1'> <input type="date" name="data_nasc"></span> <span id='font1'> {{pesquisador.dataValues.datanasc}} 
+                            Data de nascimento:<span id='mov1'> <input type="date" name="data_nasc"></span> <span id='font1'> {{#formataAno pesquisador.dataValues.datanasc}}{{/formataAno}} 
                             </span> <br>
 
                             E-mail: <span id='mov2'>  <input type="email" name="email" value="{{pesquisador.dataValues.email}}" > </span>  
                             
                             <hr>
                             Data em que comecei a trabalhar com ciência de dados:<br>
-                            <span id='mov4'> <input type="date" name="data_inicio" > </span><span id='font1'>{{pesquisador.dataValues.data_inicio_cd}}</span> 
+                            <span id='mov4'> <input type="date" name="data_inicio" > </span><span id='font1'>{{#formataAno pesquisador.dataValues.data_inicio_cd}}{{/formataAno}}</span> 
 
                             <fieldset>
                                 <legend>Local de trabalho</legend>
