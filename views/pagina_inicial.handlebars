@@ -76,28 +76,34 @@
 
 <div div="corpo_meio">
 <section id="section_ini">
-             
+       
+      {{#each erros_postagem}}
+            <div class="alert alert-danger" role="alert">{{texto}}</div>
+      {{else}}
+
+      {{/each}}
+
+      
+    
+      
 
       {{#if eh_pesquisador}}
             {{#each erros_publicacao}}
                   <div class="alert alert-danger" role="alert">{{texto}}</div>
+            {{else}}
             {{/each}}
-
-            {{#each erros_postagem}}
-                  <div class="alert alert-danger" role="alert">{{texto}}</div>
-            {{/each}}
-
+            
             <div class="accordion" id="accordionExample">
                   <div class="card">
                         <div class="card-header" id="headingOne">
                               <h2 class="mb-0">
-                              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="True" aria-controls="collapseOne">
                               Postar mensagem
                               </button>
                               </h2>
                         </div>
 
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                               <div class="card-body">
                                     <div id="formulario_postar">
                                           <form action="./add_postagem" method="POST">
@@ -142,33 +148,9 @@
             </div>
 
 
-      {{else}}
-            <div class="accordion" id="accordionExample">
-                  <div class="card">
-                        <div class="card-header" id="headingOne">
-                              <h2 class="mb-0">
-                              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                              Postar mensagem
-                              </button>
-                              </h2>
-                              </div>
+           
 
-                  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        <div class="card-body">
-                              <div id="formulario_postar">
-                                    <form action="./add_postagem" method="POST">
-                                          <div class="form-group">
-                                                <label for="exampleFormControlTextarea1" class="font-weight-bold">Postagem:</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="texto_postagem" placeholder="Comunique-se com os demais membros da rede ...">{{postagem_editar.dataValues.conteudo}}</textarea>
-                                          </div> 
-                                    <button type="submit" class="btn btn-light">Publicar</button>        
-                                    </form>
-                              </div>   
-                        </div>
-                  </div>
-            </div>
-            </div>
-      
+      {{else}}
       {{/if}}
 
        
@@ -260,4 +242,5 @@
       </div>      
       
 </aside>
+    
 
