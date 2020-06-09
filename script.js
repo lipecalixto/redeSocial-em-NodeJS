@@ -162,7 +162,8 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                         Cidadao.findAll({where:{[Op.and]:[{temas_interesse:dados_perfil.topicos_interesse},{id:{[Op.not]:array_cid}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_cidadaos){
                          
                           res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,eh_pesquisador,
-                            postagens,publicacoes,sugestoes_pesquisadores,sugestoes_cidadaos}) 
+                            postagens,publicacoes,sugestoes_pesquisadores,sugestoes_cidadaos})
+                            console.log(dados_perfil) 
                         })      
                       }) 
 
@@ -928,6 +929,7 @@ app.post('/add_pesq', async (req,res) =>{
     }).then(function(novo_pesquisador){
         var novaConta=true
         res.render('cadastro_pesq',({novaConta,novo_pesquisador}))
+        console.log(novo_pesquisador.datanasc)
     }).catch(function(erro){
         res.redirect("/")
     })
@@ -1240,8 +1242,8 @@ app.post('/att_pesq/:id', async (req,res) =>{
 
 
 
-//Servidor online
-app.listen(3000,function(){
+//Servidor localhost
+app.listen(8081,function(){
   console.log('Servidor rodando...')
 })
 

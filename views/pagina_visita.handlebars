@@ -32,13 +32,13 @@
                         <p>Instituição de Pesquisa: {{dados_perfil.dataValues.instituicao_pesquisa}}</p>
                         <hr>
                         <p>E-mail: {{dados_perfil.dataValues.email}}</p>
-                        <p>Nascimento:{{dados_perfil.dataValues.datanasc}}</p>
-                        <p>Início com ciência de dados: {{dados_perfil.dataValues.data_inicio_cd}}</p>
+                        <p>Nascimento: {{#formataAno dados_perfil.dataValues.datanasc}}{{/formataAno}}</p>
+                        <p>Início com ciência de dados: {{#formataAno dados_perfil.dataValues.data_inicio_cd}} {{/formataAno}}</p>
                         <a href="https://{{dados_perfil.dataValues.link_cv}}/" target="_blank">Currículo Lattes</a>
                   {{else}}
                         <p>Escolaridade: {{dados_perfil.dataValues.escolaridade}}</p>
                         <p>E-mail: {{dados_perfil.dataValues.email}}</p>
-                        <p>Nascimento: {{dados_perfil.dataValues.datanasc}}</p>
+                        <p>Nascimento: {{#formataAno dados_perfil.dataValues.datanasc}}{{/formataAno}}</p>
 
 
              
