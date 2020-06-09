@@ -85,43 +85,78 @@
 
       
     
-      <div id="formulario_postar">
-            <form action="./add_postagem" method="POST">
-                  <div class="form-group">
-                  <label for="exampleFormControlTextarea1" class="font-weight-bold">Postagem:</label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="texto_postagem" placeholder="Comunique-se com os demais membros da rede ...">{{postagem_editar.dataValues.conteudo}}</textarea>
-                  </div> 
-                  <button type="submit" class="btn btn-light">Publicar</button>        
-            </form>
-      </div>   
+      
 
       {{#if eh_pesquisador}}
             {{#each erros_publicacao}}
                   <div class="alert alert-danger" role="alert">{{texto}}</div>
             {{else}}
             {{/each}}
-            <div id="formulario_postar">
-            <form action="./add_publicacao" method="POST">
-                  <div class="form-group">
-                  <label for="exampleFormControlTextarea1" class="font-weight-bold">Publicação:</label><br>
-                  Título:<input type="text" name="titulo_pub">
-                  Local de publicação:<input type="text" name="local_pub">
-                  Ano de publicação:<input type="number" name="ano_pub">
-                  URL:<input type="text" name="url_pub">
-                  Tags:<input type="text" name="tags_pub">
-                  Resumo:<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="resumo_pub" placeholder="Breve resumo sobre o artigo..."></textarea>
-                  <input type="file" name="arquivo_pub" id="">
-                  </div> 
-                  <button type="submit" class="btn btn-light">Publicar</button>        
-            </form>
-      </div>
+            
+            <div class="accordion" id="accordionExample">
+                  <div class="card">
+                        <div class="card-header" id="headingOne">
+                              <h2 class="mb-0">
+                              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              Postar mensagem
+                              </button>
+                              </h2>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                              <div class="card-body">
+                                    <div id="formulario_postar">
+                                          <form action="./add_postagem" method="POST">
+                                                <div class="form-group">
+                                                <label for="exampleFormControlTextarea1" class="font-weight-bold">Postagem:</label>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="texto_postagem" placeholder="Comunique-se com os demais membros da rede ...">{{postagem_editar.dataValues.conteudo}}</textarea>
+                                                </div> 
+                                                <button type="submit" class="btn btn-light">Publicar</button>        
+                                          </form>
+                                    </div>   
+                              </div>
+                        </div>
+                  </div>
+                  <div class="card">
+                        <div class="card-header" id="headingTwo">
+                              <h2 class="mb-0">
+                              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              Postar Publicação
+                              </button>
+                              </h2>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                              <div class="card-body">
+                                     <div id="formulario_postar">
+                                          <form action="./add_publicacao" method="POST">
+                                                <div class="form-group">
+                                                <label for="exampleFormControlTextarea1" class="font-weight-bold">Publicação:</label><br>
+                                                Título:<input type="text" name="titulo_pub">
+                                                Local de publicação:<input type="text" name="local_pub">
+                                                Ano de publicação:<input type="number" name="ano_pub">
+                                                URL:<input type="text" name="url_pub">
+                                                Tags:<input type="text" name="tags_pub">
+                                                Resumo:<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="resumo_pub" placeholder="Breve resumo sobre o artigo..."></textarea>
+                                                <input type="file" name="arquivo_pub" id="">
+                                                </div> 
+                                                <button type="submit" class="btn btn-light">Publicar</button>        
+                                          </form>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+
+
+           
+
       {{else}}
       {{/if}}
 
        
        
        
-     
+     <br> <br> <br>
      
      <h1>Postagens</h1>
       {{#each postagens}}
