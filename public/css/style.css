@@ -358,13 +358,14 @@ section article h1{
 
 #iside1_pagini{
 	border: 1px solid #ecdff4;
-	width: 250px;
+	width: 300px;
 	height: 800px;
     position: absolute;
     margin-top: 20px;
 	margin-left: 0px;
     background-color:#ecdff4 ;
     padding: 5px 10px;
+    top:94px;
 }
 
 #iside1_pagini h2{
@@ -384,11 +385,13 @@ section article h1{
 	margin-top: 3px;
     background-color: gray;
     text-align: center;
+    position: relative;
+    left: 90px;
 }
 
 
 #iside2_pagini{
-    top:200px;
+    top:145px;
 	padding: 2px;
 	position: absolute;
 	right: 0px;
@@ -489,7 +492,40 @@ section article h1{
     background-color: blue;
   }
 
-  
+/* pagina visita*/
+#iside1_pagini1{
+	border: 1px solid #ecdff4;
+	width: 300px;
+	height: 800px;
+    position: absolute;
+    margin-top: 20px;
+	margin-left: 0px;
+    background-color:#ecdff4 ;
+    padding: 5px 10px;
+    top:56px;
+}
+
+#iside1_pagini1 h2{
+    text-align: center;
+    font-size: 22px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+#iside1_pagini1 p{
+    font-size: 15px;
+}
+
+#iside1_pagini1 #foto{
+	width: 100px;
+	height: 100px;
+	margin-top: 3px;
+    background-color: gray;
+    text-align: center;
+    position: relative;
+    left: 90px;
+}
+
 
 /* Atualizar dados cid */
 
