@@ -338,7 +338,7 @@ section article h1{
 
 #section_ini{
 	border:2px #ecdff4 solid;
-    width: 800px;
+    width: 965px;
     height: 100%;
     margin-left: 300px;
     padding: 20px;
@@ -391,7 +391,7 @@ section article h1{
 
 
 #iside2_pagini{
-    top:145px;
+    top:114px;
 	padding: 2px;
 	position: absolute;
 	right: 0px;
@@ -526,6 +526,24 @@ section article h1{
     left: 90px;
 }
 
+#iside2_pagini1{
+    top:76px;
+	padding: 14px;
+	position: absolute;
+	right: 0px;
+	text-align: center;
+    background-color:#ecdff4;
+
+}
+#iside2_pagini1 ul li{
+	list-style-type:none;
+    font-size: 13px;
+}
+
+#iside2_pagini1 ul li a{
+	padding: 7px 15px;
+    font-size: 13px;
+}
 
 /* Atualizar dados cid */
 
