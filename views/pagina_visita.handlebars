@@ -35,11 +35,12 @@
                         <p>Nascimento: {{#formataAno dados_perfil.dataValues.datanasc}}{{/formataAno}}</p>
                         <p>Início com ciência de dados: {{#formataAno dados_perfil.dataValues.data_inicio_cd}} {{/formataAno}}</p>
                         <a href="https://{{dados_perfil.dataValues.link_cv}}/" target="_blank">Currículo Lattes</a>
+                        <p>Tópicos de interesse: {{dados_perfil.dataValues.temas_interesse}}</p>
                   {{else}}
                         <p>Escolaridade: {{dados_perfil.dataValues.escolaridade}}</p>
                         <p>E-mail: {{dados_perfil.dataValues.email}}</p>
                         <p>Nascimento: {{#formataAno dados_perfil.dataValues.datanasc}}{{/formataAno}}</p>
-
+                        <p>Tópicos de interesse: {{dados_perfil.dataValues.temas_interesse}}</p>
 
              
                   {{/if}}
@@ -97,6 +98,7 @@
                         Tags: {{dataValues.tags_publicacao}}
                         <hr>
                         Curtidas: {{dataValues.curtidas}} <a href="/curtir_pub/{{dataValues.id}}">Curtir</a>
+                        <a href="/publicacoes/{{dataValues.arquivo}}" target="_blank"> Download do artigo </a>
                   </div>
             {{else}}
             <p>{{dados_perfil.dataValues.nome}} não possui nenhuma publicação até o momento.</p>

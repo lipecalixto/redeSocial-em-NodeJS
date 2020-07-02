@@ -58,11 +58,12 @@
                         {{olamundo}}
                         <p>Início com ciência de dados: {{#formataAno dados_perfil.dataValues.data_inicio_cd}}{{/formataAno}}</p>
                         <a href="https://{{dados_perfil.dataValues.link_cv}}/" target="_blank">Currículo Lattes</a>
+                        <p>Tópicos de interesse: {{dados_perfil.dataValues.temas_interesse}}</p>
                   {{else}}
                         <p>Escolaridade: {{dados_perfil.dataValues.escolaridade}}</p>
                         <p>E-mail: {{dados_perfil.dataValues.email}}</p>
                         <p>Nascimento: {{#formataAno dados_perfil.dataValues.datanasc}}{{/formataAno}}</p>
-
+                        <p>Tópicos de interesse: {{dados_perfil.dataValues.temas_interesse}}</p>
 
              
                   {{/if}}
@@ -128,7 +129,7 @@
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                               <div class="card-body">
                                      <div id="formulario_postar">
-                                          <form action="./add_publicacao" method="POST">
+                                          <form action="./add_publicacao" method="POST" enctype="multipart/form-data">
                                                 <div class="form-group">
                                                 <label for="exampleFormControlTextarea1" class="font-weight-bold">Publicação:</label><br>
                                                 Título:<input type="text" name="titulo_pub">
@@ -137,7 +138,7 @@
                                                 URL:<input type="text" name="url_pub">
                                                 Tags:<input type="text" name="tags_pub">
                                                 Resumo:<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="resumo_pub" placeholder="Breve resumo sobre o artigo..."></textarea>
-                                                <input type="file" name="arquivo_pub" id="">
+                                                <input type="file" name="arquivo_pub">
                                                 </div> 
                                                 <button type="submit" class="btn btn-light">Publicar</button>        
                                           </form>
@@ -194,6 +195,8 @@
             Tags: {{dataValues.tags_publicacao}}
             <hr>
             Curtidas:{{dataValues.curtidas}}
+            
+            <a href="/publicacoes/{{dataValues.arquivo}}" target="_blank"> Baixar PDF</a>
       </div>
             {{else}}
                   <p>Nenhuma publicação para exibir, compartilhe conhecimento e cadastre agora mesmo uma publicação .</p>

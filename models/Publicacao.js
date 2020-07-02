@@ -25,6 +25,9 @@ const Publicacao=bd.sequelize.define('publicacoes',{
     curtidas:{
         type:bd.Sequelize.INTEGER,
         defaultValue: 0
+    },
+    arquivo:{
+        type:bd.Sequelize.STRING 
     }
 })
 

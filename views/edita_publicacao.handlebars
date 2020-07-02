@@ -13,15 +13,16 @@
 
 <div id="formulario_postar">
             <form action="/att_publicacao/{{publicacao.dataValues.id}}" method="POST">
-                  <div class="form-group">
-                  <label for="exampleFormControlTextarea1" class="font-weight-bold">Publicação:</label><br>
-                  Título:<input type="text" name="titulo_pub" value="{{publicacao.dataValues.titulo_publicacao}}">
-                  Local de publicação:<input type="text" name="local_pub" value="{{publicacao.dataValues.local_publicacao}}">
-                  Ano de publicação:<input type="number" name="ano_pub" value="{{publicacao.dataValues.ano_publicacao}}">
-                  URL:<input type="text" name="url_pub" value="{{publicacao.dataValues.url_publicacao}}">
-                  Tags:<input type="text" name="tags_pub" value="{{publicacao.dataValues.tags_publicacao}}">
-                  Resumo:<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="resumo_pub" placeholder="Breve resumo sobre o artigo...">{{publicacao.dataValues.resumo_publicacao}}</textarea>
-                  <input type="file" name="arquivo_pub" id="">
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1" class="font-weight-bold">Publicação:</label><br>
+                    Título:<input type="text" name="titulo_pub" value="{{publicacao.dataValues.titulo_publicacao}}">
+                    Local de publicação:<input type="text" name="local_pub" value="{{publicacao.dataValues.local_publicacao}}">
+                    Ano de publicação:<input type="number" name="ano_pub" value="{{publicacao.dataValues.ano_publicacao}}">
+                    URL:<input type="text" name="url_pub" value="{{publicacao.dataValues.url_publicacao}}">
+                    Tags:<input type="text" name="tags_pub" value="{{publicacao.dataValues.tags_publicacao}}">
+                    Resumo:<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="resumo_pub" placeholder="Breve resumo sobre o artigo...">{{publicacao.dataValues.resumo_publicacao}}</textarea>
+                    <a href="/publicacoes/{{publicacao.dataValues.arquivo}}" download> Download do arquivo </a>
+                  
                   </div> 
                   <button type="submit" class="btn btn-light">Publicar</button>        
             </form>

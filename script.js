@@ -8,6 +8,26 @@ function verificaIdade(ano_nasc){
   return idade
 }
 
+function sugestaoMembros(lista_membros,array_temasPerfil){
+  membros_sugeridos=[]
+  lista_membros.forEach(function(membro){
+                   
+    array_temas=membro.temas_interesse.split(',')
+      for(let i=0; i<array_temas.length;i++){
+       
+        for(let c=0;c<array_temasPerfil.length;c++){
+        
+          if(array_temas[i]==array_temasPerfil[c]){
+            membros_sugeridos.push(membro)
+            i=100000
+          }
+        }        
+      }
+         
+    })
+    return membros_sugeridos
+}
+
 
 const express=require('express')
 const app=express()
@@ -24,8 +44,16 @@ const banco=require('./models/Banco')
 const path=require("path")
 const Op =banco.Sequelize.Op;
 const moment = require('moment')
-
-
+const multer= require("multer")
+const storage= multer.diskStorage({
+  destination: function(req,file,cb){
+    cb(null,"public/publicacoes/")
+  },
+  filename: function(req,file,cb){
+    cb(null, file.originalname + Date.now()+ path.extname(file.originalname))
+  }
+})
+const upload= multer({storage})
 
 var id_usuario=-1
 var tipo_usuario='####'
@@ -87,9 +115,10 @@ app.get('/cad_cid',function(req,res){
 app.get('/:pagina/:tipo/:id/', async function(req,res){ 
 
   if(req.params.pagina=='pessoal'){
-
+   
     if(req.params.tipo=='cidadao'){
       Cidadao.findOne({where:{'id':req.params.id}}).then(function(dados_perfil){
+        array_temasPerfil=dados_perfil.temas_interesse.split(',')
         var eh_pesquisador=false
         Postagem.findAll({order:[['curtidas','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
           Seguir.findAll({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_tipo:'pesquisador'}]}}).then(function(seguindo_pesquisadores){
@@ -113,11 +142,30 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                     lista_cidadaos=null
                   }
                 
-                  Pesquisador.findAll({where:{[Op.and]:[{topicos_interesse:dados_perfil.temas_interesse},{id:{[Op.not]:array_pesq}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_pesquisadores){
-                    Cidadao.findAll({where:{[Op.and]:[{temas_interesse:dados_perfil.temas_interesse},{id:{[Op.not]:array_cid}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_cidadaos){
+                  Pesquisador.findAll({where:{[Op.and]:[{id:{[Op.not]:array_pesq}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_pesquisadores){
+                    sugestoes_pesquisadores2=sugestaoMembros(sugestoes_pesquisadores,array_temasPerfil)
+                    console.log(sugestoes_pesquisadores2)
+                    Cidadao.findAll({where:{[Op.and]:[{id:{[Op.not]:array_cid}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_cidadaos){
+                      sugestoes_cidadaos2=sugestaoMembros(sugestoes_cidadaos,array_temasPerfil)
                       
+                      /*
+                      sugestoes_cidadaos.forEach(function(cidadao){                 
+                        array_temas=cidadao.temas_interesse.split(',')
+                          for(let i=0; i<array_temas.length;i++){
+                           
+                            for(let c=0;c<array_temasPerfil.length;c++){
+                            
+                              if(array_temas[i]==array_temasPerfil[c]){
+                                sugestoes_cidadaos2.push(cidadao)
+                                i=100000
+                              }
+                            }        
+                          }
+                             
+                        })*/
+                        
                       res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,
-                        eh_pesquisador,postagens,sugestoes_cidadaos,sugestoes_pesquisadores})
+                        eh_pesquisador,postagens,sugestoes_cidadaos:sugestoes_cidadaos2,sugestoes_pesquisadores:sugestoes_pesquisadores2})
                     })
                   })
 
@@ -135,6 +183,7 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
     }else if(req.params.tipo=='pesquisador'){
       Pesquisador.findOne({where:{'id':req.params.id}}).then(function(dados_perfil){
         var eh_pesquisador=true
+        array_temasPerfil=dados_perfil.temas_interesse.split(',')
         Postagem.findAll({order:[['curtidas','DESC']], where:{[Op.and]:[{id_membro:req.params.id},{tipo_membro:req.params.tipo}]}}).then(function(postagens){
           Seguir.findAll({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_tipo:'pesquisador'}]}}).then(function(seguindo_pesquisadores){
             Seguir.findAll({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_tipo:'cidadao'}]}}).then(function(seguindo_cidadaos){
@@ -158,12 +207,14 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                   }
 
                   Publicacao.findAll({order:[['curtidas','DESC']],where:{id_pesquisador:req.params.id}}).then(function(publicacoes){
-                      Pesquisador.findAll({where:{[Op.and]:[{topicos_interesse:dados_perfil.topicos_interesse},{id:{[Op.not]:array_pesq}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_pesquisadores){
-                        Cidadao.findAll({where:{[Op.and]:[{temas_interesse:dados_perfil.topicos_interesse},{id:{[Op.not]:array_cid}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_cidadaos){
-                         
+                      Pesquisador.findAll({where:{[Op.and]:[{id:{[Op.not]:array_pesq}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_pesquisadores){
+                        sugestoes_pesquisadores2=sugestaoMembros(sugestoes_pesquisadores,array_temasPerfil)
+                        
+                        Cidadao.findAll({where:{[Op.and]:[{id:{[Op.not]:array_cid}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_cidadaos){
+                          sugestoes_cidadaos2=sugestaoMembros(sugestoes_cidadaos,array_temasPerfil)
                           res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,eh_pesquisador,
-                            postagens,publicacoes,sugestoes_pesquisadores,sugestoes_cidadaos})
-                            console.log(dados_perfil) 
+                            postagens,publicacoes,sugestoes_pesquisadores:sugestoes_pesquisadores2,sugestoes_cidadaos:sugestoes_cidadaos2})
+                             
                         })      
                       }) 
 
@@ -310,7 +361,7 @@ app.post('/cadastro_geral',async (req,res) =>{
     var dataNascimento=req.body.data_nasc
     dataNascimento=dataNascimento.split("-")
     var idade=verificaIdade(Number(dataNascimento[0]))
-    console.log(dataNascimento)
+
     
     
     var ehmembro1= await Cidadao.findOne({ where: { email:req.body.email } })
@@ -361,7 +412,7 @@ app.post('/cadastro_geral',async (req,res) =>{
         senha: req.body.senha,
         datanasc:req.body.data_nasc
       }
-      console.log(dados_comuns.datanasc)
+    
      
         if(req.body.tipouser=='pesquisador'){
           res.redirect("/cad_pesq")
@@ -450,11 +501,14 @@ app.post('/pessoal/:tipo/:id/add_postagem',function(req,res){
   }
 })
 
-app.post('/pessoal/:tipo/:id/add_publicacao',function(req,res){
+app.post('/pessoal/:tipo/:id/add_publicacao', upload.single("arquivo_pub"), function(req,res){
 
   var dt=new Date()
   var ano_atual= dt.getFullYear()
   var erros_publicacao=[]
+
+
+  console.log(req.file.filename) //Pega nome do arquivo + extensão
 
   if(req.body.titulo_pub==null || req.body.titulo_pub==" " || req.body.titulo_pub==""){
     erros_publicacao.push({texto:'Insira o título do artigo.'})
@@ -496,8 +550,9 @@ app.post('/pessoal/:tipo/:id/add_publicacao',function(req,res){
       ano_publicacao:req.body.ano_pub,
       url_publicacao:req.body.url_pub,
       tags_publicacao:req.body.tags_pub,
-      resumo_publicacao:req.body.resumo_pub
-  }).then(function(){
+      resumo_publicacao:req.body.resumo_pub,
+      arquivo:req.file.filename
+  }).then(function(pub){
     res.redirect("./")
   })
   }
@@ -826,6 +881,7 @@ app.post('/pessoal/:tipo/:id/busca_membro',async (req,res) => {
 app.post('/add_cid', async (req,res) =>{
   var erros_cid= []
   
+
   if(req.body.numdoc==null || req.body.numdoc=="" || req.body.numdoc==" "){
     erros_cid.push({texto:`Informe o número do seu ${req.body.tipodoc}.`})
   }
@@ -834,13 +890,13 @@ app.post('/add_cid', async (req,res) =>{
     erros_cid.push({texto:`Número do ${req.body.tipodoc} muito pequeno, digite a numeração correta.`})
   }
 
-  if(req.body.cid_topicos==null || req.body.cid_topicos=="" || req.body.cid_topicos==" "){
+  if(req.body.selecao_topicos==undefined){
     erros_cid.push({texto:'Informe ao menos um tópico de interesse.'})
   }
+  
   if(erros_cid.length>0){
     res.render('cadastro_cid',({erros_cid:erros_cid}))
   }else{
-
 
     Cidadao.create({
       nome: dados_comuns.nome,
@@ -850,12 +906,12 @@ app.post('/add_cid', async (req,res) =>{
       tipo_doc:req.body.tipodoc,
       numero_doc:req.body.numdoc,
       escolaridade:req.body.escolaridade,
-      temas_interesse:req.body.cid_topicos
+      temas_interesse:String(req.body.selecao_topicos)
       
   }).then(function(novo_cidadao){
     var novaConta=true
     res.render('cadastro_cid',({novaConta,novo_cidadao}))
-    console.log(novo_cidadao.datanasc)
+    
   }).catch(function(erro){
       res.redirect("/")
   })
@@ -904,7 +960,7 @@ app.post('/add_pesq', async (req,res) =>{
       erros_pes.push({texto:'Nome da instituição de formação muito pequeno, verifique e digite o nome correto.'})
     }
 
-    if(req.body.pes_topicos==null || req.body.pes_topicos=="" || req.body.pes_topicos==" "){
+    if(req.body.selecao_topicos==undefined){
       erros_pes.push({texto:'Informe ao menos um tópico de interesse.'})
     }
     
@@ -924,12 +980,12 @@ app.post('/add_pesq', async (req,res) =>{
         nivel_formacao:req.body.nivel_form,
         instituicao_formacao:req.body.local_form,
         link_cv:req.body.linkcv,
-        topicos_interesse:req.body.pes_topicos
+        temas_interesse:String(req.body.selecao_topicos)
         
     }).then(function(novo_pesquisador){
         var novaConta=true
         res.render('cadastro_pesq',({novaConta,novo_pesquisador}))
-        console.log(novo_pesquisador.datanasc)
+    
     }).catch(function(erro){
         res.redirect("/")
     })
@@ -948,10 +1004,6 @@ app.post('/att_cid/:id',async (req,res) =>{
   const cidadao= await Cidadao.findOne({ where: { id:req.params.id } })
 
   
-  if(req.body.senha_verificacao!=cidadao.senha){
-    erros_cid.push({texto:'Senha de verificação incorreta.'})
-    res.render('atualiza_cid',({erros_cid,cidadao,id_usuario,tipo_usuario}))
-  }else{
   if(req.body.nome!=cidadao.nome && req.body.nome.length<3){
     erros_cid.push({texto:'Nome muito pequeno. Digite um nome válido.'})
   }else{
@@ -1033,11 +1085,10 @@ app.post('/att_cid/:id',async (req,res) =>{
     })
   }
 
-  if(req.body.cid_topicos!=cidadao.temas_interesse && req.body.cid_topicos.length<3){
-    erros_cid.push({texto:'Informe um tópico correto.'})
-  }else{
+  if(req.body.selecao_topicos!=undefined){
+    
     Cidadao.update({
-      temas_interesse:req.body.cid_topicos
+      temas_interesse:String(req.body.selecao_topicos)
     }, {
       where: {
         id: {
@@ -1061,7 +1112,7 @@ app.post('/att_cid/:id',async (req,res) =>{
       }))
     })
   }
-}
+
 })
 
 app.post('/att_pesq/:id', async (req,res) =>{
@@ -1073,12 +1124,7 @@ app.post('/att_pesq/:id', async (req,res) =>{
   var pesquisador=await Pesquisador.findOne({where:{id:req.params.id}})
   
 
-  if(req.body.senha_verificacao!=pesquisador.senha){
-    erros_pes.push({texto:'Senha de verificação incorreta.'})
-    res.render('atualiza_pesq',({erros_pes,pesquisador,id_usuario,tipo_usuario
-    }))
 
-  }else{
 
   if(req.body.nome!=pesquisador.nome && req.body.nome.length<3){
     erros_pes.push({texto:'Nome muito pequeno. Digite um nome válido.'})
@@ -1207,11 +1253,10 @@ app.post('/att_pesq/:id', async (req,res) =>{
    
   }
 
-  if(req.body.pes_topicos!=pesquisador.topicos_interesse && req.body.pes_topicos.length<3){
-    erros_pes.push({texto:'Informe um tópico correto.'})
-  }else{
+  if(req.body.selecao_topicos!=undefined){
+    
     Pesquisador.update({
-      topicos_interesse:req.body.pes_topicos
+      temas_interesse:String(req.body.selecao_topicos)
     }, {
       where: {
         id: {
@@ -1219,7 +1264,6 @@ app.post('/att_pesq/:id', async (req,res) =>{
         }
       }
     })
-  
   }
 
   if(erros_pes.length>0 ){
@@ -1235,7 +1279,7 @@ app.post('/att_pesq/:id', async (req,res) =>{
       }))  
     })
   } 
-}
+
 })
 
 
@@ -1244,7 +1288,7 @@ app.post('/att_pesq/:id', async (req,res) =>{
 
 
 //Servidor online
-app.listen(3000,function(){
+app.listen(8081,function(){
   console.log('Servidor rodando...')
 })
 

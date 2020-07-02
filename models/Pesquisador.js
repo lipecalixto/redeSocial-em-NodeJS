@@ -34,7 +34,7 @@ const Pesquisador=bd.sequelize.define('pesquisadores',{
     link_cv:{
         type:bd.Sequelize.STRING
     },
-    topicos_interesse:{
+    temas_interesse:{
         type:bd.Sequelize.STRING
     }  
 })
