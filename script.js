@@ -260,8 +260,39 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                   }
                   var total_seguidores=array_pesq.length+array_cid.length
 
-                  res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,total_seguidores,
-                    dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens})
+                  Seguir.findAll({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_tipo:'pesquisador'}]}}).then(function(seguindo_pesquisadores){
+                    Seguir.findAll({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_tipo:'cidadao'}]}}).then(function(seguindo_cidadaos){
+                      var array_cid=[]
+                      seguindo_cidadaos.forEach(function(c){
+                        if(c.dataValues.seguido_id!=req.params.id){
+                          array_cid.push(c.dataValues.seguido_id)
+                        }
+                        
+                      })
+                      
+                      var array_pesq=[]
+                      seguindo_pesquisadores.forEach(function(p){
+                        array_pesq.push(p.dataValues.seguido_id)
+                      })
+                      
+                      Pesquisador.findAll({where:{id:{[Op.or]:array_pesq}}}).then(function(lista_pesquisadoresSeguindo){
+                        if(array_pesq.length<lista_pesquisadoresSeguindo.length){
+                          lista_pesquisadoresSeguindo=null
+                        }
+                        Cidadao.findAll({where:{id:{[Op.or]:array_cid}}}).then(function(lista_cidadaosSeguindo){
+                          if(array_cid.length<lista_cidadaosSeguindo.length){
+                            lista_cidadaosSeguindo=null
+                          }
+                          res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,total_seguidores,
+                            dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,lista_cidadaosSeguindo,lista_pesquisadoresSeguindo})
+                        })
+                      }) 
+                      
+
+                    })
+
+                  })
+
                 })
               })
             })            
@@ -298,8 +329,42 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
   
                   Publicacao.findAll({order:[['curtidas','DESC']],where:{id_pesquisador:req.params.id}}).then(function(publicacoes){
                     var total_seguidores=array_pesq.length+array_cid.length
-                    res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,total_seguidores,
-                      dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,publicacoes})
+
+                    Seguir.findAll({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_tipo:'pesquisador'}]}}).then(function(seguindo_pesquisadores){
+                      Seguir.findAll({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_tipo:'cidadao'}]}}).then(function(seguindo_cidadaos){
+                        var array_cid=[]
+                        seguindo_cidadaos.forEach(function(c){
+                          if(c.dataValues.seguido_id!=req.params.id){
+                            array_cid.push(c.dataValues.seguido_id)
+                          }
+                          
+                        })
+                        
+                        var array_pesq=[]
+                        seguindo_pesquisadores.forEach(function(p){
+                          if(p.dataValues.seguido_id!=req.params.id){
+                            array_pesq.push(p.dataValues.seguido_id)
+                          }
+                          
+                        })
+                        
+                        Pesquisador.findAll({where:{id:{[Op.or]:array_pesq}}}).then(function(lista_pesquisadoresSeguindo){
+                          if(array_pesq.length<lista_pesquisadoresSeguindo.length){
+                            lista_pesquisadoresSeguindo=null
+                          }
+                          Cidadao.findAll({where:{id:{[Op.or]:array_cid}}}).then(function(lista_cidadaosSeguindo){
+                            if(array_cid.length<lista_cidadaosSeguindo.length){
+                              lista_cidadaosSeguindo=null
+                            }
+
+                            res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,total_seguidores,
+                              dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,publicacoes,lista_pesquisadoresSeguindo,lista_cidadaosSeguindo})
+
+                          })
+                        })
+                      })
+                    })
+
                   })
                 })
               })
@@ -930,7 +995,9 @@ app.post('/add_pesq', async (req,res) =>{
   valida_inicioCD=valida_inicioCD.split("-")
   var ano_inicioCD=Number(valida_inicioCD[0])
     
-    
+  if(req.body.numdoc==null || req.body.numdoc=="" || req.body.numdoc==" "){
+    erros_pes.push({texto:`Informe o número do seu ${req.body.tipodoc}.`})
+  }
     if(ano_inicioCD<=(ano_nasc+15)){
       erros_pes.push({texto:`Atenção. Verifique a data em que você começou a trabalhar com ciência de dados.`})
  

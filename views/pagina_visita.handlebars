@@ -66,7 +66,27 @@
             {{/each}}
             </ul>
       </div>
+
+      <div class="list-group">
+            <ul><span id="seguidores">Seguindo:</span>
+                 
+            {{#each lista_pesquisadoresSeguindo}}
+                  <li><a href="/visita/pesquisador/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+            {{else}}
+                  <li> <a class="list-group-item list-group-item-action list-group-item-secondary">Segue nenhum pesquisador</a></li>
+            {{/each}}
+            {{#each lista_cidadaosSeguindo}}
+                  <li><a href="/visita/cidadao/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+            {{else}}
+                  <li> <a class="list-group-item list-group-item-action list-group-item-secondary">Segue nenhum cidadão</a></li>
+            {{/each}}
+            </ul>
+      </div>
 </aside>
+
+
+
+
 <div div="corpo_meio">
 <section id="section_ini">    
       <h1>Postagens</h1>
