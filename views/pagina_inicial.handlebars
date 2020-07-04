@@ -1,8 +1,20 @@
-<header>
+<header id="topo_paginaPrincipal">
       
       <nav id="nav_topo">
-            
-            
+                  <div class="dropdown">
+                        <button class="dropbtn"> Menu </button>
+                  <div class="dropdown-content">
+                        {{#if eh_pesquisador}}
+                              <a href="/atualiza_pesq/{{dados_perfil.dataValues.id}}">alterar dados</a>
+                        {{else}}
+                              <a href="/atualiza_cid/{{dados_perfil.dataValues.id}}">alterar dados</a>
+                        {{/if}} 
+
+                        <a href="/">  Sair  </a>
+                        
+                  </div>
+      </div>
+
             <form action="./busca_membro" class="form-inline" id="busca_membro" method="POST" >
                   <input class="form-control mr-sm-2" type="search" name="nome_pesquisado" placeholder="nome do membro" aria-label="Search">
                   <button class="btn btn-info" type="submit">Buscar</button>
@@ -22,23 +34,10 @@
            
 
       {{/if}}
-
+ <div class="clear"></div>
       </nav>
-      <div class="dropdown">
-                  <button class="dropbtn"> Menu </button>
-                  <div class="dropdown-content">
-                        
 
-                              {{#if eh_pesquisador}}
-                                    <a href="/atualiza_pesq/{{dados_perfil.dataValues.id}}">alterar dados</a>
-                              {{else}}
-                                    <a href="/atualiza_cid/{{dados_perfil.dataValues.id}}">alterar dados</a>
-                              {{/if}} 
-
-                        <a href="/">  Sair  </a>
-                        
-                  </div>
-      </div>
+     
 </header>
 
 <aside id="iside1_pagini">
@@ -75,11 +74,12 @@
             
 </aside>
 
-<div div="corpo_meio">
+
 <section id="section_ini">
        
       {{#each erros_postagem}}
             <div class="alert alert-danger" role="alert">{{texto}}</div>
+      
       {{else}}
 
       {{/each}}
@@ -135,7 +135,7 @@
                                                 URL:<input type="text" name="url_pub">
                                                 Tags:<input type="text" name="tags_pub">
                                                 Resumo:<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="resumo_pub" placeholder="Breve resumo sobre o artigo..."></textarea>
-                                                <input type="file" name="arquivo_pub">
+                                                <input type="file" name="arquivo_pub" required>
                                                 </div> 
                                                 <button type="submit" class="btn btn-light">Publicar</button>        
                                           </form>
@@ -182,8 +182,9 @@
        
      <br> <br> <br>
      
-     <h1>Postagens</h1>
+     <h1 id="titulo_postagens">Postagens</h1>
       {{#each postagens}}
+            <center>
       <div id="quadro_postagens"> 
             <a href="/deletar_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
             <a href="/atualiza_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
@@ -195,6 +196,7 @@
             <hr>
             Curtidas:{{dataValues.curtidas}}
       </div>
+      </center>
       {{else}}
       <p>Nenhuma postagem para exibir, compartilhe idéias e interaja com seus amigos.</p>
       {{/each}}
@@ -203,6 +205,7 @@
       {{#if eh_pesquisador}}
       <h1>Publicações</h1>
             {{#each publicacoes}}
+      <center>
       <div id="quadro_postagens">
             <a href="/deletar_publicacao/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
             <a href="/atualiza_publicacao/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
@@ -221,6 +224,7 @@
             
             <a href="/publicacoes/{{dataValues.arquivo}}" target="_blank"> Baixar PDF</a>
       </div>
+      </center>
             {{else}}
                   <p>Nenhuma publicação para exibir, compartilhe conhecimento e cadastre agora mesmo uma publicação .</p>
             {{/each}}
@@ -247,7 +251,7 @@
              {{/each}}
              </ul>
       </div>
-
+<hr>
 
       <div class="list-group">
              <ul><span id="sugestoes"> Pessoas que você deveria conhecer: </span>

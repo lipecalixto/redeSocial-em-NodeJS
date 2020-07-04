@@ -573,7 +573,7 @@ app.post('/pessoal/:tipo/:id/add_publicacao', upload.single("arquivo_pub"), func
   var erros_publicacao=[]
 
 
-  console.log(req.file.filename) //Pega nome do arquivo + extensão
+
 
   if(req.body.titulo_pub==null || req.body.titulo_pub==" " || req.body.titulo_pub==""){
     erros_publicacao.push({texto:'Insira o título do artigo.'})
@@ -591,7 +591,6 @@ app.post('/pessoal/:tipo/:id/add_publicacao', upload.single("arquivo_pub"), func
     erros_publicacao.push({texto:'Preencha um breve resumo de sua publicação.'})
   }
 
-  
   
   if(erros_publicacao.length>0){
     if(req.params.tipo=='pesquisador'){
