@@ -393,11 +393,11 @@ app.get('/visita/:tipo/:id/seguir', async function(req,res){
         segue_tipo:tipo_usuario,
         seguido_id:req.params.id,
         seguido_tipo:req.params.tipo
-      }).then(function(){
-        res.redirect(`/visita/${req.params.tipo}/${req.params.id}/`)
+      }).then(function(seg){
+        res.redirect(`/visita/${seg.seguido_tipo}/${seg.seguido_id}/`)
       })
     }else{
-      Seguir.destroy({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_id:req.params.id},{seguido_tipo:req.params.tipo}]}}).then(function(){
+      Seguir.destroy({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_id:req.params.id},{seguido_tipo:req.params.tipo}]}}).then(function(seg){
         res.redirect(`/visita/${req.params.tipo}/${req.params.id}/`)     
       })
   
@@ -709,8 +709,8 @@ app.post('/att_publicacao/:id', function (req,res){
       resumo_publicacao:req.body.resumo_pub
     }, {
       where: {
-        id_pesquisador: {
-          [Op.eq]:id_usuario
+        id: {
+          [Op.eq]:req.params.id
         }
       }
     }).then(function(){
@@ -720,7 +720,7 @@ app.post('/att_publicacao/:id', function (req,res){
 })
 
 
-app.get('/curtir/:id',function (req,res){
+app.get('/curtir/:id/',function (req,res){
   if(tipo_usuario=='cidadao'){
     Curtida.findOne({where:{[Op.and]:[{Postagemid:req.params.id},{cidadaoId:id_usuario}]}}).then(function(curtida){
       if(curtida==null){
@@ -731,7 +731,7 @@ app.get('/curtir/:id',function (req,res){
       }).then(function(){
         Postagem.increment('curtidas',{where:{id:req.params.id}}).then(function(){
           Postagem.findOne({where:{id:req.params.id}}).then(function(postagem){
-            res.redirect(`/visita/${postagem.tipo_membro}/${postagem.id_membro}`)
+            res.redirect(`/visita/${postagem.tipo_membro}/${postagem.id_membro}/`)
           })
           
         })
@@ -740,7 +740,7 @@ app.get('/curtir/:id',function (req,res){
         Curtida.destroy({where:{[Op.and]:[{Postagemid:req.params.id},{cidadaoId:id_usuario}]}}).then(function(){
           Postagem.decrement('curtidas',{where:{id:req.params.id}}).then(function(){
             Postagem.findOne({where:{id:req.params.id}}).then(function(postagem){
-              res.redirect(`/visita/${postagem.tipo_membro}/${postagem.id_membro}`)
+              res.redirect(`/visita/${postagem.tipo_membro}/${postagem.id_membro}/`)
             })
             
           })

@@ -97,7 +97,9 @@
                   <hr> 
                   <p>{{dataValues.conteudo}}</p>
                   <hr>
-                  Curtidas: {{dataValues.curtidas}} <a href="/curtir/{{dataValues.id}}">Curtir</a>
+                                   <p class="curtidas_post">Curtidas: {{dataValues.curtidas}} 
+                  <a href="/curtir/{{dataValues.id}}/">Curtir</a></p>
+                  <div class="clear"></div>
             </div>
       {{else}}
       <p>{{dados_perfil.dataValues.nome}} não possui nenhuma postagem até o momento.</p>
@@ -109,19 +111,25 @@
                   <div id="quadro_postagens">
                         <small>publicado em {{#formatDate dataValues.createdAt}}{{/formatDate}}</small>
                         <div class="clear"></div>
-                        <p><b>{{dataValues.titulo_publicacao}}</p></b>
+                        <p class="titulo_pub"><b>{{dataValues.titulo_publicacao}}</p></b>
                         <hr>
-                        <p>{{dataValues.resumo_publicacao}}</p>
-                        <i>Local de publicação: {{dataValues.local_publicacao}}</i><br>
-                        <i>Ano: {{dataValues.ano_publicacao}}</i><br>
-                        <a href="https://{{dataValues.url_publicacao}}/" target="_blank">URL da publicação</a><br>
-                        Tags: {{dataValues.tags_publicacao}}
-                        <hr>
-                        Curtidas: {{dataValues.curtidas}} <a href="/curtir_pub/{{dataValues.id}}">Curtir</a>
-                        <a href="/publicacoes/{{dataValues.arquivo}}" target="_blank"> Download do artigo </a>
+                  
+                        <div class="info_pub">
+                              <i>Local de publicação: {{dataValues.local_publicacao}}</i><br>
+                              <i>Ano: {{dataValues.ano_publicacao}}</i><br>
+                              <i><a href="https://{{dataValues.url_publicacao}}/" target="_blank">URL da publicação</a><br></i>
+                              <i>Tags: {{dataValues.tags_publicacao}}<br></i>
+                              <a href="/publicacoes/{{dataValues.arquivo}}" target="_blank">Baixar PDF</a>           
+                  </div>
+                        <p class="resumo_pub"><b>Resumo:</b>{{dataValues.resumo_publicacao}}</p>
+                  <div class="clear"></div>
+                  <hr>
+                        <p class="curtidas_post">Curtidas: {{dataValues.curtidas}} 
+                        <a href="/curtir_pub/{{dataValues.id}}/">Curtir</a></p>
+                  <div class="clear"></div>
                   </div>
             {{else}}
-            <p>{{dados_perfil.dataValues.nome}} não possui nenhuma publicação até o momento.</p>
+                  <p>{{dados_perfil.dataValues.nome}} não possui nenhuma publicação até o momento.</p>
             {{/each}}
       {{else}}
       {{/if}}

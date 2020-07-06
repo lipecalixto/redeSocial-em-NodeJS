@@ -186,15 +186,18 @@
       {{#each postagens}}
             <center>
       <div id="quadro_postagens"> 
-            <a href="/deletar_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
-            <a href="/atualiza_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
+            <div class="edit_pub">
+                  <a href="/deletar_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
+                  <a href="/atualiza_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
+            </div>
             <small>postado em {{#formatDate dataValues.createdAt}}{{/formatDate}}</small>
             
             <div class="clear"></div>
           <hr> <p>{{dataValues.conteudo}}</p>
 
             <hr>
-            Curtidas:{{dataValues.curtidas}}
+            <p class="curtidas_post">Curtidas: {{dataValues.curtidas}}</p>
+            <div class="clear"></div>
       </div>
       </center>
       {{else}}
@@ -207,22 +210,27 @@
             {{#each publicacoes}}
       <center>
       <div id="quadro_postagens">
-            <a href="/deletar_publicacao/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
-            <a href="/atualiza_publicacao/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
+            <div class="edit_pub">
+                  <a href="/deletar_publicacao/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
+                  <a href="/atualiza_publicacao/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
+            </div>
             <small>publicado em {{#formatDate dataValues.createdAt}}{{/formatDate}}</small>
             <div class="clear"></div>
             
-            <p><b>{{dataValues.titulo_publicacao}}</p></b>
+            <p class="titulo_pub"><b>{{dataValues.titulo_publicacao}}</p></b>
             <hr>
-            <p>{{dataValues.resumo_publicacao}}</p>
-            <i>Local de publicação: {{dataValues.local_publicacao}}</i><br>
-            <i>Ano: {{dataValues.ano_publicacao}}</i><br>
-            <a href="https://{{dataValues.url_publicacao}}/" target="_blank">URL da publicação</a><br>
-            Tags: {{dataValues.tags_publicacao}}
+            <div class="info_pub">
+                  <i>Local de publicação: {{dataValues.local_publicacao}}</i><br>
+                  <i>Ano: {{dataValues.ano_publicacao}}</i><br>
+                  <i><a href="https://{{dataValues.url_publicacao}}/" target="_blank">URL da publicação</a><br></i>
+                  <i>Tags: {{dataValues.tags_publicacao}}<br></i>
+                  <a href="/publicacoes/{{dataValues.arquivo}}" target="_blank">Baixar PDF</a>           
+            </div>
+            <p class="resumo_pub"><b>Resumo:</b>{{dataValues.resumo_publicacao}}</p>
+            <div class="clear"></div>
             <hr>
-            Curtidas:{{dataValues.curtidas}}
-            
-            <a href="/publicacoes/{{dataValues.arquivo}}" target="_blank"> Baixar PDF</a>
+            <p class="curtidas_post">Curtidas: {{dataValues.curtidas}}</p>
+            <div class="clear"></div>
       </div>
       </center>
             {{else}}
