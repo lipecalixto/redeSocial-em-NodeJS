@@ -757,7 +757,7 @@ app.get('/curtir/:id/',function (req,res){
       }).then(function(){
         Postagem.increment('curtidas',{where:{id:req.params.id}}).then(function(){
           Postagem.findOne({where:{id:req.params.id}}).then(function(postagem){
-            res.redirect(`/visita/${postagem.tipo_membro}/${postagem.id_membro}`)
+            res.redirect(`/visita/${postagem.tipo_membro}/${postagem.id_membro}/`)
           })
           
         })
@@ -766,7 +766,7 @@ app.get('/curtir/:id/',function (req,res){
         Curtida.destroy({where:{[Op.and]:[{Postagemid:req.params.id},{pesquisadorId:id_usuario}]}}).then(function(){
           Postagem.decrement('curtidas',{where:{id:req.params.id}}).then(function(){
             Postagem.findOne({where:{id:req.params.id}}).then(function(postagem){
-              res.redirect(`/visita/${postagem.tipo_membro}/${postagem.id_membro}`)
+              res.redirect(`/visita/${postagem.tipo_membro}/${postagem.id_membro}/`)
             })
             
           })

@@ -1,10 +1,15 @@
-<header>
-    <nav id="nav_topo">
-        <a href="/" class="btn btn-primary">  Sair  </a>
-    </nav>
+<header id="topo_paginaPrincipal">
+            <nav id="nav_topo">
+                  <div class="dropdown">
+                        <button class="dropbtn"> Menu </button>
+                  <div class="dropdown-content">
+                 <a href="/">  Sair  </a>
+                        <a href="/pessoal/{{tipo_usuario}}/{{id_usuario}}/">Página inicial</a>
+                  </div>
+      </div>
+      </nav>
+      
 </header>
-<section>
-      <a href="/pessoal/{{tipo_usuario}}/{{id_usuario}}/">Voltar para sua página</a>
         <article id="cpCadastro">
         <h1>Atualização de dados - Pesquisador</h1><hr>
         {{#each erros_pes}}
