@@ -59,20 +59,21 @@ section article h1{
   
 }
 
+#btn_voltar{
+    text-decoration: none;
+    color:white;
+}
+.cadastro_voltar{
+    float: right;
+   
+    position: relative;
+}
 
 #cp_ca1 h1{
     text-align: center;
 }
 
-#btn_voltar{
-    border-radius: 20px;
-    background-color: royalblue;
-    color:white;
-    
-    padding: 5px;
-    cursor:pointer;
-    float: right;
-}
+
 #pos_btnvoltar{
     position: relative;
     top:90px;
@@ -172,25 +173,7 @@ section article h1{
     width: 50px;
     height: 15px;
 }
-#cadastropt1 button[type=submit]{
-    border:0;
-    border-radius: 20px;
-    background-color: royalblue;
-    color:white;
-    width:100px;
-    padding: 8px;
-    cursor:pointer;
-    position: relative;
-    margin: 10px;
-    
-}
 
-#cadastropt1 button[type=submit]:hover{
-    
-    background-color: blue;
-    color:white;
-   
-}
 
 .centraliza{
     text-align: center;
@@ -256,9 +239,12 @@ section article h1{
     
 }
 
-#botoesInicio button{
-    margin-right: 25px;
+#btn_cadastro{
+    text-decoration: none;
+    color:white;
 }
+
+
 
 .tam_campo{
     position: relative;
@@ -358,7 +344,7 @@ section article h1{
     box-shadow: 2px 1px 5px blue;
     margin-top: 20px;
 	margin-left: 0px;
-    background-color:rgb(168, 218, 220) ;
+    background-color:rgba(168, 218, 220, 0.678) ;
     padding: 5px 10px;
     top:94px;
 }
@@ -396,6 +382,11 @@ section article h1{
     box-shadow:1px 1px 5px rgb(230, 57, 70);
 
 }
+
+.separa_pub{
+    float: right;
+}
+
 
 #seguidores{
 	font-size: 20px;
@@ -721,4 +712,10 @@ section article h1{
   
 .dropdownpg:hover .dropbtnpg {
     background-color: blue;
+}
+
+
+.separa_topicos{
+    float:right;
+    margin-left: 13px;
 }

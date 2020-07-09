@@ -107,7 +107,7 @@
                                           <form action="./add_postagem" method="POST">
                                                 <div class="form-group">
                                                 <label for="exampleFormControlTextarea1" class="font-weight-bold">Postagem:</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="texto_postagem" placeholder="Comunique-se com os demais membros da rede ...">{{postagem_editar.dataValues.conteudo}}</textarea>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="texto_postagem" placeholder="Comunique-se com os demais membros da rede...">{{postagem_editar.dataValues.conteudo}}</textarea>
                                                 </div> 
                                                 <button type="submit" class="btn btn-light">Publicar</button>        
                                           </form>
@@ -119,7 +119,7 @@
                         <div class="card-header" id="headingTwo">
                               <h2 class="mb-0">
                               <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                              Postar Publicação
+                              Postar Publicação Científica
                               </button>
                               </h2>
                         </div>
@@ -129,13 +129,18 @@
                                           <form action="./add_publicacao" method="POST" enctype="multipart/form-data">
                                                 <div class="form-group">
                                                 <label for="exampleFormControlTextarea1" class="font-weight-bold">Publicação:</label><br>
+                                                <div class="separa_pub">
+                                                      URL:<input type="text" name="url_pub">
+                                                      Tags:<input type="text" name="tags_pub">
+                                                      <br>
+                                                      <input type="file" name="arquivo_pub" required>
+                                                </div>
                                                 Título:<input type="text" name="titulo_pub">
-                                                Local de publicação:<input type="text" name="local_pub">
-                                                Ano de publicação:<input type="number" name="ano_pub">
-                                                URL:<input type="text" name="url_pub">
-                                                Tags:<input type="text" name="tags_pub">
-                                                Resumo:<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="resumo_pub" placeholder="Breve resumo sobre o artigo..."></textarea>
-                                                <input type="file" name="arquivo_pub" required>
+                                                Local da publicação:<input type="text" name="local_pub">
+                                                Ano da publicação:<input type="number" name="ano_pub">
+                                                <br>
+                                                Resumo:<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="resumo_pub" placeholder="Breve resumo sobre a publicação..."></textarea>
+                                                
                                                 </div> 
                                                 <button type="submit" class="btn btn-light">Publicar</button>        
                                           </form>
@@ -224,7 +229,7 @@
                   <i>Ano: {{dataValues.ano_publicacao}}</i><br>
                   <i><a href="https://{{dataValues.url_publicacao}}/" target="_blank">URL da publicação</a><br></i>
                   <i>Tags: {{dataValues.tags_publicacao}}<br></i>
-                  <a href="/publicacoes/{{dataValues.arquivo}}" target="_blank">Baixar PDF</a>           
+                  <a href="/publicacoes/{{dataValues.arquivo}}" target="_blank">Download da publicação</a>           
             </div>
             <p class="resumo_pub"><b>Resumo:</b>{{dataValues.resumo_publicacao}}</p>
             <div class="clear"></div>

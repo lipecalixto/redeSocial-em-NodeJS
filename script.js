@@ -778,7 +778,7 @@ app.get('/curtir/:id/',function (req,res){
 
 })
 
-app.get('/curtir_pub/:id',function (req,res){
+app.get('/curtir_pub/:id/',function (req,res){
   if(tipo_usuario=='cidadao'){
     Curtida_pub.findOne({where:{[Op.and]:[{publicacao_id:req.params.id},{cidadaoId:id_usuario}]}}).then(function(curtida){
       if(curtida==null){
@@ -789,7 +789,7 @@ app.get('/curtir_pub/:id',function (req,res){
         }).then(function(){
           Publicacao.increment('curtidas',{where:{id:req.params.id}}).then(function(){
             Publicacao.findOne({where:{id:req.params.id}}).then(function(publicacao){
-              res.redirect(`/visita/pesquisador/${publicacao.id_pesquisador}`)
+              res.redirect(`/visita/pesquisador/${publicacao.id_pesquisador}/`)
             })
             
           })
@@ -798,7 +798,7 @@ app.get('/curtir_pub/:id',function (req,res){
         Curtida_pub.destroy({where:{[Op.and]:[{publicacao_id:req.params.id},{cidadaoId:id_usuario}]}}).then(function(){
           Publicacao.decrement('curtidas',{where:{id:req.params.id}}).then(function(){
             Publicacao.findOne({where:{id:req.params.id}}).then(function(publicacao){
-              res.redirect(`/visita/pesquisador/${publicacao.id_pesquisador}`)
+              res.redirect(`/visita/pesquisador/${publicacao.id_pesquisador}/`)
             })
             
           })
@@ -815,7 +815,7 @@ app.get('/curtir_pub/:id',function (req,res){
       }).then(function(){
         Publicacao.increment('curtidas',{where:{id:req.params.id}}).then(function(){
           Publicacao.findOne({where:{id:req.params.id}}).then(function(publicacao){
-            res.redirect(`/visita/pesquisador/${publicacao.id_pesquisador}`)
+            res.redirect(`/visita/pesquisador/${publicacao.id_pesquisador}/`)
           })
           
         })
@@ -824,7 +824,7 @@ app.get('/curtir_pub/:id',function (req,res){
         Curtida_pub.destroy({where:{[Op.and]:[{publicacao_id:req.params.id},{pesquisadorId:id_usuario}]}}).then(function(){
           Publicacao.decrement('curtidas',{where:{id:req.params.id}}).then(function(){
             Publicacao.findOne({where:{id:req.params.id}}).then(function(publicacao){
-              res.redirect(`/visita/pesquisador/${publicacao.id_pesquisador}`)
+              res.redirect(`/visita/pesquisador/${publicacao.id_pesquisador}/`)
             })
             
           })
