@@ -469,7 +469,8 @@ section article h1{
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: 80px;
+    height:auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
    
@@ -507,7 +508,10 @@ section article h1{
   }
   
   
- 
+ #dpn-sair{
+     position: relative;
+     left: -35px;
+ }
 
 /* pagina visita*/
 #iside1_pagini1{
