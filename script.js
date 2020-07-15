@@ -283,8 +283,13 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                           if(array_cid.length<lista_cidadaosSeguindo.length){
                             lista_cidadaosSeguindo=null
                           }
-                          res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,total_seguidores,
-                            dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,lista_cidadaosSeguindo,lista_pesquisadoresSeguindo})
+                          Seguir.findOne({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_id:req.params.id},{seguido_tipo:req.params.tipo}]}}).then(function(ja_segue){
+                            if(ja_segue!=null){
+                              ja_segue=true
+                            }
+                            res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,total_seguidores,ja_segue,
+                              dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,lista_cidadaosSeguindo,lista_pesquisadoresSeguindo})
+                          })
                         })
                       }) 
                       
@@ -356,9 +361,16 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                             if(array_cid.length<lista_cidadaosSeguindo.length){
                               lista_cidadaosSeguindo=null
                             }
+                            Seguir.findOne({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_id:req.params.id},{seguido_tipo:req.params.tipo}]}}).then(function(ja_segue){
+                              
+                              console.log(ja_segue)
+                              if(ja_segue!=null){
+                                ja_segue=true
+                              }
+                              res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,total_seguidores,ja_segue,
+                                dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,publicacoes,lista_pesquisadoresSeguindo,lista_cidadaosSeguindo})
+                            })
 
-                            res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,total_seguidores,
-                              dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,publicacoes,lista_pesquisadoresSeguindo,lista_cidadaosSeguindo})
 
                           })
                         })
@@ -1347,6 +1359,7 @@ app.post('/att_pesq/:id', async (req,res) =>{
   } 
 
 })
+
 
 
 
