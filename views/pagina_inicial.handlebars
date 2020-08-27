@@ -15,10 +15,14 @@
                         </div>
                   </div>
 
+      
             <form action="./busca_membro" class="form-inline" id="busca_membro" method="POST" >
-                  <input class="form-control mr-sm-2" type="search" name="nome_pesquisado" placeholder="nome do membro" aria-label="Search">
-                  <button class="btn btn-info" type="submit">Buscar</button>
+            
+
+                  <input class="form-control mr-sm-2" type="search" name="nome_pesquisado" aria-label="Search">
                   
+                  
+                  <button class="btn btn-info" type="submit">Buscar</button>
                   {{#if encontrou_membro}}
                         <div class="list-group">
                   {{#each pesquisadores}}
@@ -29,6 +33,7 @@
                         <a href="/visita/cidadao/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a>
                   {{/each}}
                   {{else}}
+
             </form>
 
            
@@ -133,7 +138,7 @@
                                                       URL:<input type="text" name="url_pub">
                                                       Tags:<input type="text" name="tags_pub">
                                                       <br>
-                                                      <input type="file" name="arquivo_pub" required>
+                                                      <input type="file" name="arquivo_pub">
                                                 </div>
                                                 Título:<input type="text" name="titulo_pub">
                                                 Local da publicação:<input type="text" name="local_pub">
@@ -190,7 +195,7 @@
      <h1 id="titulo_postagens">Postagens</h1>
       {{#each postagens}}
             <center>
-      <div id="quadro_postagens"> 
+      <div class="quadro_postagens"> 
             <div class="edit_pub">
                   <a href="/deletar_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
                   <a href="/atualiza_postagem/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
@@ -214,7 +219,7 @@
       <h1>Publicações</h1>
             {{#each publicacoes}}
       <center>
-      <div id="quadro_postagens">
+      <div class="quadro_postagens">
             <div class="edit_pub">
                   <a href="/deletar_publicacao/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Deletar</button></a>
                   <a href="/atualiza_publicacao/{{dataValues.id}}"><button type="button" class="btn btn-secondary">Editar</button></a> 
@@ -263,6 +268,22 @@
                   <li> <a class="list-group-item list-group-item-action list-group-item-light">Seguindo nenhum cidadão</a></li>
              {{/each}}
              </ul>
+      </div>
+
+            <div class="list-group">
+            <ul><span id="seguidores">Seguidores:</span>
+                 
+            {{#each seguidores_pesquisadores}}
+                  <li><a href="/visita/pesquisador/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+            {{else}}
+                  <li> <a class="list-group-item list-group-item-action list-group-item-secondary">Seguido por nenhum pesquisador</a></li>
+            {{/each}}
+            {{#each seguidores_cidadaos}}
+                  <li><a href="/visita/cidadao/{{dataValues.id}}/" class="list-group-item list-group-item-action list-group-item-light">{{dataValues.nome}}</a></li>
+            {{else}}
+                  <li> <a class="list-group-item list-group-item-action list-group-item-secondary">Seguido por nenhum cidadão</a></li>
+            {{/each}}
+            </ul>
       </div>
 <hr>
 

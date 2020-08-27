@@ -393,7 +393,7 @@ section article h1{
 	font-weight:bold;
 }
 
-#quadro_postagens{
+.quadro_postagens{
     background-color:rgb(230,230,250);
     margin-top: 20px;
     margin-left: 20px;
@@ -405,12 +405,12 @@ section article h1{
     box-shadow: 2px 2px 2px gray;
 }
 
-#quadro_postagens p{
+.quadro_postagens p{
     margin: 10px;
     text-align: center;
 }
 
-#quadro_postagens small{
+.quadro_postagens small{
     font-style: italic;
     float: right;
 }

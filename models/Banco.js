@@ -2,8 +2,8 @@ const Sequelize=require('sequelize')
 
 
 
-const sequelize=new Sequelize('bdederone','root','root291623',{
-    host:"database-aws.cidmehxsi5hh.us-east-1.rds.amazonaws.com",
+const sequelize=new Sequelize('sistemadecadastro','userrede','291623',{
+    host:"localhost",
     dialect:"mysql"
 })
 /*

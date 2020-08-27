@@ -1,3 +1,5 @@
+
+
 function exibirCadastro(campo){
     document.getElementById(campo).style.display='inline';
 }
@@ -148,23 +150,34 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                     Cidadao.findAll({where:{[Op.and]:[{id:{[Op.not]:array_cid}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_cidadaos){
                       sugestoes_cidadaos2=sugestaoMembros(sugestoes_cidadaos,array_temasPerfil)
                       
-                      /*
-                      sugestoes_cidadaos.forEach(function(cidadao){                 
-                        array_temas=cidadao.temas_interesse.split(',')
-                          for(let i=0; i<array_temas.length;i++){
-                           
-                            for(let c=0;c<array_temasPerfil.length;c++){
-                            
-                              if(array_temas[i]==array_temasPerfil[c]){
-                                sugestoes_cidadaos2.push(cidadao)
-                                i=100000
+
+
+
+
+
+                      Seguir.findAll({where:{[Op.and]:[{seguido_id:req.params.id},{seguido_tipo:req.params.tipo},{segue_tipo:'cidadao'}]}}).then(function(seguidores_cidadaos){
+                        Seguir.findAll({where:{[Op.and]:[{seguido_id:req.params.id},{seguido_tipo:req.params.tipo},{segue_tipo:'pesquisador'}]}}).then(function(seguidores_pesquisadores){
+                          var array_cid=[]
+                          seguidores_cidadaos.forEach(function(c){
+                            array_cid.push(c.dataValues.segue_id)
+                          })
+              
+                          var array_pesq=[]
+                          seguidores_pesquisadores.forEach(function(p){
+                            array_pesq.push(p.dataValues.segue_id)
+                          })
+
+                            Pesquisador.findAll({where:{id:{[Op.or]:array_pesq}}}).then(function(seguidores_pesquisadores){
+                              if(array_pesq.length<seguidores_pesquisadores.length){
+                                seguidores_pesquisadores=null
                               }
-                            }        
-                          }
-                             
-                        })*/
+              
+                              Cidadao.findAll({where:{id:{[Op.or]:array_cid}}}).then(function(seguidores_cidadaos){
+                                if(array_cid.length<seguidores_cidadaos.length){
+                                  seguidores_cidadaos=null
+                                }
                         
-                      res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,
+                      res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,seguidores_pesquisadores,seguidores_cidadaos,
                         eh_pesquisador,postagens,sugestoes_cidadaos:sugestoes_cidadaos2,sugestoes_pesquisadores:sugestoes_pesquisadores2})
                     })
                   })
@@ -178,7 +191,11 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
         })
       
     })
-
+  })
+})
+ })
+  })
+  
 
     }else if(req.params.tipo=='pesquisador'){
       Pesquisador.findOne({where:{'id':req.params.id}}).then(function(dados_perfil){
@@ -193,8 +210,12 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
               })
               
               var array_pesq=[]
+              
               seguindo_pesquisadores.forEach(function(p){
-                array_pesq.push(p.dataValues.seguido_id)
+    
+                  array_pesq.push(p.dataValues.seguido_id)
+                
+               
               })
               
               Pesquisador.findAll({where:{id:{[Op.or]:array_pesq}}}).then(function(lista_pesquisadores){
@@ -212,8 +233,42 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                         
                         Cidadao.findAll({where:{[Op.and]:[{id:{[Op.not]:array_cid}},{id:{[Op.not]:id_usuario}}]}}).then(function(sugestoes_cidadaos){
                           sugestoes_cidadaos2=sugestaoMembros(sugestoes_cidadaos,array_temasPerfil)
-                          res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,eh_pesquisador,
-                            postagens,publicacoes,sugestoes_pesquisadores:sugestoes_pesquisadores2,sugestoes_cidadaos:sugestoes_cidadaos2})
+
+
+
+
+
+                          Seguir.findAll({where:{[Op.and]:[{seguido_id:req.params.id},{seguido_tipo:req.params.tipo},{segue_tipo:'cidadao'}]}}).then(function(seguidores_cidadaos){
+                            Seguir.findAll({where:{[Op.and]:[{seguido_id:req.params.id},{seguido_tipo:req.params.tipo},{segue_tipo:'pesquisador'}]}}).then(function(seguidores_pesquisadores){
+                              var array_cid=[]
+                              seguidores_cidadaos.forEach(function(c){
+                                array_cid.push(c.dataValues.segue_id)
+                              })
+                  
+                              var array_pesq=[]
+                              seguidores_pesquisadores.forEach(function(p){
+                                array_pesq.push(p.dataValues.segue_id)
+                              })
+    
+                                Pesquisador.findAll({where:{id:{[Op.or]:array_pesq}}}).then(function(seguidores_pesquisadores){
+                                  if(array_pesq.length<seguidores_pesquisadores.length){
+                                    seguidores_pesquisadores=null
+                                  }
+                  
+                                  Cidadao.findAll({where:{id:{[Op.or]:array_cid}}}).then(function(seguidores_cidadaos){
+                                    if(array_cid.length<seguidores_cidadaos.length){
+                                      seguidores_cidadaos=null
+                                    }
+
+                            res.render('pagina_inicial',{dados_perfil,lista_cidadaos,lista_pesquisadores,eh_pesquisador,seguidores_pesquisadores,seguidores_cidadaos,
+                              postagens,publicacoes,sugestoes_pesquisadores:sugestoes_pesquisadores2,sugestoes_cidadaos:sugestoes_cidadaos2})
+                        })
+                      })
+    
+                
+                    })
+                  })  
+
                              
                         })      
                       }) 
@@ -287,6 +342,7 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                             if(ja_segue!=null){
                               ja_segue=true
                             }
+                            console.log(postagemCurtidas(postagens))
                             res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,total_seguidores,ja_segue,
                               dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,lista_cidadaosSeguindo,lista_pesquisadoresSeguindo})
                           })
@@ -363,10 +419,11 @@ app.get('/:pagina/:tipo/:id/', async function(req,res){
                             }
                             Seguir.findOne({where:{[Op.and]:[{segue_id:id_usuario},{segue_tipo:tipo_usuario},{seguido_id:req.params.id},{seguido_tipo:req.params.tipo}]}}).then(function(ja_segue){
                               
-                              console.log(ja_segue)
                               if(ja_segue!=null){
                                 ja_segue=true
                               }
+                              console.log(lista_cidadaosSeguindo)
+                              console.log(lista_cidadaosSeguindo)
                               res.render('pagina_visita',{lista_cidadaos,lista_pesquisadores,total_seguidores,ja_segue,
                                 dados_perfil,eh_pesquisador,id_usuario,tipo_usuario,postagens,publicacoes,lista_pesquisadoresSeguindo,lista_cidadaosSeguindo})
                             })
@@ -884,9 +941,32 @@ app.post('/pessoal/:tipo/:id/busca_membro',async (req,res) => {
                               lista_cidadaos=null
                             }
                             Publicacao.findAll({order:[['curtidas','DESC']],where:{id_pesquisador:req.params.id}}).then(function(publicacoes){
-                              res.render('pagina_inicial',({dados_perfil,encontrou_membro,pesquisadores,cidadaos,
-                                tipo_usuario,id_usuario,lista_cidadaos,lista_pesquisadores,eh_pesquisador,postagens}))
-                              
+
+                                Seguir.findAll({where:{[Op.and]:[{seguido_id:req.params.id},{seguido_tipo:req.params.tipo},{segue_tipo:'cidadao'}]}}).then(function(seguidores_cidadaos){
+                                  Seguir.findAll({where:{[Op.and]:[{seguido_id:req.params.id},{seguido_tipo:req.params.tipo},{segue_tipo:'pesquisador'}]}}).then(function(seguidores_pesquisadores){
+                                    var array_cid=[]
+                                    seguidores_cidadaos.forEach(function(c){
+                                      array_cid.push(c.dataValues.segue_id)
+                                    })
+                        
+                                    var array_pesq=[]
+                                    seguidores_pesquisadores.forEach(function(p){
+                                      array_pesq.push(p.dataValues.segue_id)
+                                    })
+          
+                                      Pesquisador.findAll({where:{id:{[Op.or]:array_pesq}}}).then(function(seguidores_pesquisadores){
+                                        if(array_pesq.length<seguidores_pesquisadores.length){
+                                          seguidores_pesquisadores=null
+                                        }
+                        
+                                        Cidadao.findAll({where:{id:{[Op.or]:array_cid}}}).then(function(seguidores_cidadaos){
+                                          if(array_cid.length<seguidores_cidadaos.length){
+                                            seguidores_cidadaos=null
+                                          }
+
+                                          res.render('pagina_inicial',({dados_perfil,encontrou_membro,pesquisadores,cidadaos,
+                                            seguidores_cidadaos,seguidores_pesquisadores,tipo_usuario,id_usuario,lista_cidadaos,lista_pesquisadores,eh_pesquisador,postagens}))
+
                             })
                           })
                         })       
@@ -894,7 +974,10 @@ app.post('/pessoal/:tipo/:id/busca_membro',async (req,res) => {
 
                     })
                   })
-
+                })
+              })
+            })
+          })
                   
               })
       
@@ -932,9 +1015,43 @@ app.post('/pessoal/:tipo/:id/busca_membro',async (req,res) => {
                             if(array_cid.length<lista_cidadaos.length){
                               lista_cidadaos=null
                             }
-                            res.render('pagina_inicial',({dados_perfil,encontrou_membro,pesquisadores,cidadaos,
-                              tipo_usuario,id_usuario,lista_cidadaos,lista_pesquisadores,eh_pesquisador,postagens}))
+
+                              
+
+
+
+
+                              Seguir.findAll({where:{[Op.and]:[{seguido_id:req.params.id},{seguido_tipo:req.params.tipo},{segue_tipo:'cidadao'}]}}).then(function(seguidores_cidadaos){
+                                Seguir.findAll({where:{[Op.and]:[{seguido_id:req.params.id},{seguido_tipo:req.params.tipo},{segue_tipo:'pesquisador'}]}}).then(function(seguidores_pesquisadores){
+                                  var array_cid=[]
+                                  seguidores_cidadaos.forEach(function(c){
+                                    array_cid.push(c.dataValues.segue_id)
+                                  })
                       
+                                  var array_pesq=[]
+                                  seguidores_pesquisadores.forEach(function(p){
+                                    array_pesq.push(p.dataValues.segue_id)
+                                  })
+        
+                                    Pesquisador.findAll({where:{id:{[Op.or]:array_pesq}}}).then(function(seguidores_pesquisadores){
+                                      if(array_pesq.length<seguidores_pesquisadores.length){
+                                        seguidores_pesquisadores=null
+                                      }
+                      
+                                      Cidadao.findAll({where:{id:{[Op.or]:array_cid}}}).then(function(seguidores_cidadaos){
+                                        if(array_cid.length<seguidores_cidadaos.length){
+                                          seguidores_cidadaos=null
+                                        }
+
+
+                                        res.render('pagina_inicial',({dados_perfil,encontrou_membro,pesquisadores,cidadaos,seguidores_pesquisadores,seguidores_cidadaos,
+                                          tipo_usuario,id_usuario,lista_cidadaos,lista_pesquisadores,eh_pesquisador,postagens}))
+
+
+                                        })
+                                      })
+                                    })
+                                  })
                           })
                         })       
                       })  
@@ -1365,8 +1482,8 @@ app.post('/att_pesq/:id', async (req,res) =>{
 
 
 
-//Servidor online
-app.listen(3000,function(){
+//Servidor localhost
+app.listen(8081,function(){
   console.log('Servidor rodando...')
 })
 

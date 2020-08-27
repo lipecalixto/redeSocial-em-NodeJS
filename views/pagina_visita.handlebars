@@ -95,7 +95,7 @@
 <section id="section_ini">    
       <h1>Postagens</h1>
       {{#each postagens}}
-            <div id="quadro_postagens">
+            <div class="quadro_postagens">
                   <small>postado em {{#formatDate dataValues.createdAt}}{{/formatDate}}</small>
                   <div class="clear"></div>
                   <hr> 
@@ -103,7 +103,7 @@
                   <hr>
                                    <p class="curtidas_post">Curtidas: {{dataValues.curtidas}} 
                                       
-                  <a href="/curtir/{{dataValues.id}}/">Curtir</a></p>
+                  <a href="/curtir/{{dataValues.id}}/" id="{{dataValues.id}}">Curtir</a></p>
                   <div class="clear"></div>
             </div>
       {{else}}
@@ -113,7 +113,7 @@
       {{#if eh_pesquisador}}
       <h1>Publicações</h1>
             {{#each publicacoes}}
-                  <div id="quadro_postagens">
+                  <div class="quadro_postagens">
                         <small>publicado em {{#formatDate dataValues.createdAt}}{{/formatDate}}</small>
                         <div class="clear"></div>
                         <p class="titulo_pub"><b>{{dataValues.titulo_publicacao}}</p></b>
